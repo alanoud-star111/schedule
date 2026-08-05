@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<!-- Alanoud's UPV class schedule — mobile-first version for GitHub Pages -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alanoud's UPV Class Schedule</title>
+<style>
+:root{
+  color-scheme: light dark;
+  --bg:#f7f5f2; --card:#ffffff; --ink:#23211d; --muted:#6b6660; --border:#e6e1da;
+  --accent:#b0355c; --warn-bg:#fdf3e3; --warn-border:#e8c574; --warn-ink:#7a5a00;
+  --past:#b8b3ac; --chip:#faf9f7;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#191817; --card:#232120; --ink:#ece9e4; --muted:#a09a92; --border:#3a3733;
+    --warn-bg:#2e2716; --warn-border:#6b5a26; --warn-ink:#e0c268; --past:#5c5750; --chip:#2b2927; }
+}
+*{box-sizing:border-box; margin:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;padding:16px 12px 48px}
+#app{max-width:640px;margin:0 auto}
+.top h1{font-size:1.45rem;letter-spacing:-.02em}
+.sub{color:var(--muted);font-size:.85rem;margin:2px 0 16px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:14px}
+.today-card{border:2px solid var(--accent)}
+.card-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:10px}
+.range{font-weight:400;text-transform:none;letter-spacing:0}
+.today-date{font-weight:700;font-size:1.05rem;margin-bottom:10px}
+.cls{display:flex;gap:12px;padding:10px 12px;border-radius:10px;background:var(--chip);border-left:4px solid #999;margin-bottom:8px}
+.cls.past{opacity:.45}
+.cls.now{outline:2px solid var(--accent);outline-offset:-2px}
+.cls-time{font-weight:700;min-width:96px;font-variant-numeric:tabular-nums;font-size:.92rem}
+.cls-name{font-weight:600;font-size:.92rem}
+.cls-meta{color:var(--muted);font-size:.78rem}
+.none{color:var(--muted);font-style:italic;font-size:.9rem}
+.next-up{margin-top:10px;padding-top:10px;border-top:1px dashed var(--border);font-size:.85rem;color:var(--muted)}
+.wk-day{margin-bottom:10px}
+.wk-day-h{font-size:.8rem;font-weight:700;color:var(--muted);margin-bottom:4px}
+.wk-day-h.today{color:var(--accent)}
+.pill{display:flex;gap:8px;align-items:baseline;font-size:.82rem;padding:5px 10px;border-radius:8px;background:var(--chip);border-left:3px solid #999;margin-bottom:4px}
+.pill b{font-variant-numeric:tabular-nums;font-weight:700;white-space:nowrap}
+.warn{background:var(--warn-bg);border-color:var(--warn-border)}
+.warn .card-label{color:var(--warn-ink)}
+.warn ul{padding-left:18px;font-size:.85rem}
+.warn li{margin-bottom:6px}
+.note{font-size:.76rem;color:var(--muted);margin-top:8px}
+.filters{display:flex;gap:8px;margin-bottom:10px}
+select{flex:1;padding:8px 10px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--ink);font-size:.85rem}
+.full-list{max-height:400px;overflow-y:auto;border:1px solid var(--border);border-radius:10px;padding:4px 10px}
+.fl-row{display:flex;gap:10px;padding:7px 2px;border-bottom:1px solid var(--border);font-size:.8rem;align-items:baseline}
+.fl-row:last-child{border-bottom:none}
+.fl-row.past{opacity:.45}
+.fl-date{min-width:86px;font-variant-numeric:tabular-nums;color:var(--muted);white-space:nowrap}
+.fl-time{min-width:88px;font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
+.footer{color:var(--muted);font-size:.72rem;text-align:center;margin-top:20px}
+.keyrow{display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);font-size:.83rem;align-items:baseline}
+.keyrow:last-child{border-bottom:none}
+.keyrow .kd{min-width:132px;font-weight:700;font-variant-numeric:tabular-nums}
+.keyrow.big .kd{color:var(--accent)}
+.keyrow .kn{color:var(--muted);font-size:.78rem}
+</style>
+</head>
+<body>
+<section id="app">
+  <header class="top">
+    <h1>Class Schedule</h1>
+    <p class="sub">MUGEPS · UPV Valencia · Edificio 7J (FADE), Campus de Vera</p>
+  </header>
+
+  <div class="card today-card">
+    <div class="card-label">Today</div>
+    <div id="today-date" class="today-date"></div>
+    <div id="today-classes"></div>
+    <div id="next-up" class="next-up"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-label">This week</div>
+    <div id="week-view"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-label">Weekly pattern — Semester 1 <span class="range">Sep 8 – Nov 30, 2026</span></div>
+    <div id="pat1"></div>
+    <p class="note">No class Mon Oct 12 (national holiday). Knowledge Transfer runs 09:00–14:00 on alternating Thu/Fri — exact dates in the full list.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-label">Weekly pattern — Semester 2 <span class="range">Feb 16 – May 20, 2027</span></div>
+    <div id="pat2"></div>
+    <p class="note">Product Project is 3 back-to-back Wednesday sessions (09:00–14:00 + 17:00–19:00) — a full-day commitment. No classes ~Mar 12–Apr 5 (Fallas Mar 15–19 + Semana Santa Mar 21–28).</p>
+  </div>
+
+  <div class="card">
+    <div class="card-label">Key academic dates</div>
+    <div id="keydates"></div>
+  </div>
+
+  <div class="card warn">
+    <div class="card-label">Still double-check on UPV Intranet</div>
+    <ul>
+      <li>Nothing scheduled after Jun 17, 2027 — almost certainly TFM (thesis) period; confirm submission/defense dates.</li>
+      <li>Logistics has no professor listed yet.</li>
+      <li>Single-day items (orientation ~Sep 7, patron saint day ~May 7, grade deadlines) — check Calendario-Academico-MUGEPS.pdf for exact days.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-label">All sessions</div>
+    <div class="filters">
+      <select id="f-course"><option value="">All courses</option></select>
+      <select id="f-sem"><option value="">Both semesters</option><option value="1">Semester 1</option><option value="2">Semester 2</option></select>
+    </div>
+    <div id="full-list" class="full-list"></div>
+  </div>
+
+  <p class="footer">Built from official UPV group calendars (GA1 + GB1, exported Jul 30, 2026) + FADE academic calendar. Times are Europe/Madrid. "Today" recalculates automatically each time you open this page.</p>
+</section>
+
+<script>
+const COURSES=[["SENIOR MANAGEMENT AND INFORMATION TECHNOLOGIES","González Ladrón de Guevara, Fernando Raimundo","SEMINARIO 4.3",1],["PARTICIPATIVE MANAGEMENT AND TEAMWORK FOR SERVICE IMPROVEMENT","Marín García, Juan Antonio","SEMINARIO 4.3",1],["RESEARCH METHODOLOGIES","Miguel Molina, Maria Rosario de","SEMINARIO 4.3",1],["NEW TRENDS IN SERVICE STRATEGIES","Miguel Molina, María Blanca de","SEMINARIO 4.3",1],["METHODS AND TOOLS FOR BUSINESS DECISION-MAKING","Trull Domínguez, Óscar","SEMINARIO 4.3",1],["OPERATIONS MANAGEMENT","Peiró Signes, Ángel","SEMINARIO 4.3",1],["TECHNOLOGICAL ENTREPRENEURSHIP","Ribes Giner, Gabriela","SEMINARIO 4.3",1],["MANAGERIAL UNIVERSITY-COMPANIES KNOWLEDGE TRANSFER","Catalá Pérez, Daniel","SEMINARIO 0.1",1],["INNOVATION MANAGEMENT","Carrascosa López, Conrado Enrique","SEMINARIO 4.3",2],["NEW PRODUCT DEVELOPMENT","Sánchez Planelles, Joaquín","SEMINARIO 4.3",2],["PRODUCT PROJECT","Segarra Oña, María del Val","SEMINARIO 0.1",2],["SERVICE AND SALES","Miguel Molina, Maria Rosario de","SEMINARIO 4.3",2],["LOGISTICS","","SEMINARIO 4.3",2]];
+const EVENTS=[["2026-09-08","15:00","17:00",0],["2026-09-08","17:20","21:30",1],["2026-09-09","15:00","17:30",2],["2026-09-09","17:50","20:00",3],["2026-09-10","15:00","17:10",0],["2026-09-10","17:30","20:00",4],["2026-09-11","15:00","17:30",5],["2026-09-14","15:00","17:30",6],["2026-09-14","17:50","19:50",3],["2026-09-15","15:00","17:00",0],["2026-09-15","17:20","21:30",1],["2026-09-16","15:00","17:30",2],["2026-09-16","17:50","20:00",3],["2026-09-17","09:00","14:00",7],["2026-09-17","15:00","17:10",0],["2026-09-17","17:30","20:00",4],["2026-09-18","15:00","17:30",5],["2026-09-21","15:00","17:30",6],["2026-09-21","17:50","19:50",3],["2026-09-22","15:00","17:00",0],["2026-09-22","17:20","21:30",1],["2026-09-23","15:00","17:30",2],["2026-09-23","17:50","20:00",3],["2026-09-24","15:00","17:10",0],["2026-09-24","17:30","20:00",4],["2026-09-25","15:00","17:30",5],["2026-09-28","15:00","17:30",6],["2026-09-28","17:50","19:50",3],["2026-09-29","15:00","17:00",0],["2026-09-29","17:20","21:30",1],["2026-09-30","15:00","17:30",2],["2026-09-30","17:50","20:00",3],["2026-10-01","15:00","17:10",0],["2026-10-01","17:30","20:00",4],["2026-10-02","09:00","14:00",7],["2026-10-02","15:00","17:30",5],["2026-10-05","15:00","17:30",6],["2026-10-05","17:50","19:50",3],["2026-10-06","15:00","17:00",0],["2026-10-06","17:20","21:30",1],["2026-10-07","15:00","17:30",2],["2026-10-07","17:50","20:00",3],["2026-10-08","15:00","17:10",0],["2026-10-08","17:30","20:00",4],["2026-10-13","15:00","17:00",0],["2026-10-13","17:20","21:30",1],["2026-10-14","15:00","17:30",2],["2026-10-14","17:50","20:00",3],["2026-10-15","09:00","14:00",7],["2026-10-15","15:00","17:10",0],["2026-10-15","17:30","20:00",4],["2026-10-16","15:00","17:30",5],["2026-10-19","15:00","17:30",6],["2026-10-19","17:50","19:50",3],["2026-10-20","15:00","17:00",0],["2026-10-20","17:20","21:30",1],["2026-10-21","15:00","17:30",2],["2026-10-21","17:50","20:00",3],["2026-10-22","15:00","17:10",0],["2026-10-22","17:30","20:00",4],["2026-10-23","15:00","17:30",5],["2026-10-26","15:00","17:30",6],["2026-10-26","17:50","19:50",3],["2026-10-27","15:00","17:00",0],["2026-10-27","17:20","21:30",1],["2026-10-28","15:00","17:30",2],["2026-10-28","17:50","20:00",3],["2026-10-29","15:00","17:10",0],["2026-10-29","17:30","20:00",4],["2026-10-30","09:00","14:00",7],["2026-10-30","15:00","17:30",5],["2026-11-02","15:00","17:30",6],["2026-11-02","17:50","19:50",3],["2026-11-03","15:00","17:00",0],["2026-11-03","17:20","21:30",1],["2026-11-04","15:00","17:30",2],["2026-11-04","17:50","20:00",3],["2026-11-05","15:00","17:10",0],["2026-11-05","17:30","20:00",4],["2026-11-06","15:00","17:30",5],["2026-11-09","15:00","17:30",6],["2026-11-09","17:50","19:50",3],["2026-11-10","15:00","17:00",0],["2026-11-10","17:20","21:30",1],["2026-11-11","15:00","17:30",2],["2026-11-11","17:50","20:00",3],["2026-11-12","09:00","14:00",7],["2026-11-12","15:00","17:10",0],["2026-11-12","17:30","20:00",4],["2026-11-13","15:00","17:30",5],["2026-11-16","15:00","17:30",6],["2026-11-16","17:50","19:50",3],["2026-11-17","15:00","17:00",0],["2026-11-17","17:20","21:30",1],["2026-11-18","15:00","17:30",2],["2026-11-18","17:50","20:00",3],["2026-11-19","15:00","17:10",0],["2026-11-19","17:30","20:00",4],["2026-11-20","15:00","17:30",5],["2026-11-23","15:00","17:30",6],["2026-11-23","17:50","19:50",3],["2026-11-24","15:00","17:00",0],["2026-11-24","17:20","21:30",1],["2026-11-25","15:00","17:30",2],["2026-11-25","17:50","20:00",3],["2026-11-26","15:00","17:10",0],["2026-11-26","17:30","20:00",4],["2026-11-27","09:00","14:00",7],["2026-11-27","15:00","17:30",5],["2026-11-30","15:00","17:30",6],["2026-11-30","17:50","19:50",3],["2027-02-16","15:00","17:00",8],["2027-02-16","17:25","19:25",9],["2027-02-17","09:00","11:20",10],["2027-02-17","11:30","14:00",10],["2027-02-17","17:00","19:00",10],["2027-02-18","15:00","17:00",11],["2027-02-18","17:25","19:25",12],["2027-02-23","15:00","17:00",8],["2027-02-23","17:25","19:25",9],["2027-02-24","09:00","11:20",10],["2027-02-24","11:30","14:00",10],["2027-02-24","17:00","19:00",10],["2027-02-25","15:00","17:00",11],["2027-02-25","17:25","19:25",12],["2027-03-02","15:00","17:00",8],["2027-03-02","17:25","19:25",9],["2027-03-03","09:00","11:20",10],["2027-03-03","11:30","14:00",10],["2027-03-03","17:00","19:00",10],["2027-03-04","15:00","17:00",11],["2027-03-04","17:25","19:25",12],["2027-03-09","15:00","17:00",8],["2027-03-09","17:25","19:25",9],["2027-03-10","09:00","11:20",10],["2027-03-10","11:30","14:00",10],["2027-03-10","17:00","19:25",10],["2027-03-11","15:00","17:00",11],["2027-03-11","17:25","19:25",12],["2027-04-06","15:00","17:00",8],["2027-04-06","17:25","19:25",9],["2027-04-07","09:00","11:20",10],["2027-04-07","11:30","14:00",10],["2027-04-07","17:00","19:00",10],["2027-04-08","15:00","17:00",11],["2027-04-08","17:25","19:25",12],["2027-04-13","15:00","17:00",8],["2027-04-13","17:25","19:25",9],["2027-04-14","09:00","11:20",10],["2027-04-14","11:30","14:00",10],["2027-04-14","17:00","19:00",10],["2027-04-15","15:00","17:00",11],["2027-04-15","17:25","19:25",12],["2027-04-20","15:00","17:00",8],["2027-04-20","17:25","19:25",9],["2027-04-21","09:00","11:20",10],["2027-04-21","11:30","14:00",10],["2027-04-21","17:00","19:00",10],["2027-04-22","15:00","17:00",11],["2027-04-22","17:25","19:25",12],["2027-04-27","15:00","17:00",8],["2027-04-27","17:25","19:25",9],["2027-04-28","09:00","11:20",10],["2027-04-28","11:30","14:00",10],["2027-04-28","17:00","19:00",10],["2027-04-29","15:00","17:00",11],["2027-04-29","17:25","19:25",12],["2027-05-04","15:00","17:00",8],["2027-05-04","17:25","19:25",9],["2027-05-05","09:00","11:20",10],["2027-05-05","11:30","14:00",10],["2027-05-05","17:00","19:00",10],["2027-05-06","15:00","17:00",11],["2027-05-06","17:25","19:25",12],["2027-05-11","15:00","17:00",8],["2027-05-11","17:25","19:25",9],["2027-05-12","09:00","11:20",10],["2027-05-12","11:30","14:00",10],["2027-05-12","17:00","19:00",10],["2027-05-13","15:00","17:00",11],["2027-05-13","17:25","19:25",12],["2027-05-18","15:00","17:00",8],["2027-05-18","17:25","19:25",9],["2027-05-19","09:00","11:20",10],["2027-05-19","11:30","14:00",10],["2027-05-19","17:00","19:00",10],["2027-05-20","15:00","17:00",11],["2027-05-20","17:25","19:25",12]];
+const COLORS=["#1D7A8C","#B0355C","#3D8B45","#E07A2B","#8C5A1D","#4056A1","#6343BC","#6E6E6E","#009900","#B0355C","#1D7A8C","#8C5A1D","#6343BC"];
+
+function tc(s){return s.toLowerCase().split(' ').map(w=>w.length>2?w[0].toUpperCase()+w.slice(1):w).join(' ');}
+function pad(n){return String(n).padStart(2,'0');}
+function iso(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());}
+function fmtLong(d){return d.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});}
+function evObjs(){return EVENTS.map(e=>({date:e[0],start:e[1],end:e[2],ci:e[3]}));}
+
+const now=new Date();
+const todayISO=iso(now);
+const nowHM=pad(now.getHours())+':'+pad(now.getMinutes());
+document.getElementById('today-date').textContent=fmtLong(now);
+
+const all=evObjs();
+function clsHTML(e,extra){
+  const c=COURSES[e.ci];
+  return '<div class="cls '+(extra||'')+'" style="border-left-color:'+COLORS[e.ci]+'">'
+    +'<div class="cls-time">'+e.start+'–'+e.end+'</div>'
+    +'<div><div class="cls-name">'+tc(c[0])+'</div>'
+    +'<div class="cls-meta">'+c[2]+' · Edificio 7J'+(c[1]?' · '+c[1]:'')+'</div></div></div>';
+}
+
+const todays=all.filter(e=>e.date===todayISO).sort((a,b)=>a.start.localeCompare(b.start));
+const tEl=document.getElementById('today-classes');
+if(!todays.length){tEl.innerHTML='<div class="none">No classes today.</div>';}
+else{
+  tEl.innerHTML=todays.map(e=>{
+    let x='';
+    if(e.end<=nowHM)x='past';
+    else if(e.start<=nowHM&&nowHM<e.end)x='now';
+    return clsHTML(e,x);
+  }).join('');
+}
+const future=all.filter(e=>e.date>todayISO).sort((a,b)=>(a.date+a.start).localeCompare(b.date+b.start));
+const nEl=document.getElementById('next-up');
+if(future.length){
+  const n=future[0];const nd=new Date(n.date+'T00:00:00');
+  nEl.innerHTML='Next class: <b>'+tc(COURSES[n.ci][0])+'</b> — '+fmtLong(nd)+', '+n.start+'–'+n.end+' ('+COURSES[n.ci][2]+')';
+}else{nEl.textContent='No more classes in this calendar.';}
+
+function monOf(d){const dd=new Date(d);const day=dd.getDay();dd.setDate(dd.getDate()+(day===0?-6:1-day));dd.setHours(0,0,0,0);return dd;}
+const mon=monOf(now);
+let wh='';let any=false;
+for(let i=0;i<5;i++){
+  const d=new Date(mon);d.setDate(mon.getDate()+i);
+  const di=iso(d);
+  const evs=all.filter(e=>e.date===di).sort((a,b)=>a.start.localeCompare(b.start));
+  if(evs.length)any=true;
+  wh+='<div class="wk-day"><div class="wk-day-h'+(di===todayISO?' today':'')+'">'
+    +d.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'short'})+(di===todayISO?' · today':'')+'</div>';
+  wh+=evs.length?evs.map(e=>'<div class="pill" style="border-left-color:'+COLORS[e.ci]+'"><b>'+e.start+'–'+e.end+'</b> '+tc(COURSES[e.ci][0])+'</div>').join(''):'<div class="none" style="font-size:.78rem">—</div>';
+  wh+='</div>';
+}
+document.getElementById('week-view').innerHTML=any?wh:'<div class="none">No classes this week (out of term).</div>';
+
+const P1=[["Monday",[["15:00–17:30",6],["17:50–19:50",3]]],["Tuesday",[["15:00–17:10",0],["17:20–21:30",1]]],["Wednesday",[["15:00–17:30",2],["17:50–20:00",3]]],["Thursday",[["09:00–14:00 (biweekly)",7],["15:00–17:10",0],["17:30–20:00",4]]],["Friday",[["09:00–14:00 (biweekly)",7],["15:00–17:30",5]]]];
+const P2=[["Tuesday",[["15:00–17:00",8],["17:25–19:25",9]]],["Wednesday",[["09:00–14:00",10],["17:00–19:00",10]]],["Thursday",[["15:00–17:00",11],["17:25–19:25",12]]]];
+function patHTML(P){return P.map(([d,items])=>'<div class="wk-day"><div class="wk-day-h">'+d+'</div>'+items.map(([t,ci])=>'<div class="pill" style="border-left-color:'+COLORS[ci]+'"><b>'+t+'</b> '+tc(COURSES[ci][0])+'</div>').join('')+'</div>').join('');}
+document.getElementById('pat1').innerHTML=patHTML(P1);
+document.getElementById('pat2').innerHTML=patHTML(P2);
+
+const KD=[
+ ["Sep 7, 2026","Orientation (Jornadas de Acogida)","first real class Sep 8",0],
+ ["Dec 1–10, 2026","Exam period A","semester 1 finals",1],
+ ["Jan 18–21, 2027","Compensatory exams A","make-ups for semester 1",1],
+ ["Feb 16, 2027","Semester 2 starts","",0],
+ ["Mar 22–May 7, 2027","Extraordinary evaluation (2nd)","eligible students only",0],
+ ["May 24–28, 2027","Exam period B","semester 2 finals",1],
+ ["Jun 14–17, 2027","Compensatory exams B","make-ups for semester 2",1],
+ ["Jul 22–Sep 3, 2027","Extraordinary evaluation (3rd)","",0]
+];
+document.getElementById('keydates').innerHTML=KD.map(([d,t,n,big])=>'<div class="keyrow'+(big?' big':'')+'"><span class="kd">'+d+'</span><span>'+t+(n?' <span class="kn">— '+n+'</span>':'')+'</span></div>').join('');
+
+const fc=document.getElementById('f-course'),fs=document.getElementById('f-sem'),fl=document.getElementById('full-list');
+COURSES.map((c,i)=>({i,n:tc(c[0])})).sort((a,b)=>a.n.localeCompare(b.n)).forEach(({i,n})=>{
+  const o=document.createElement('option');o.value=i;o.textContent=n;fc.appendChild(o);
+});
+function render(){
+  const ci=fc.value,sem=fs.value;
+  const rows=all.filter(e=>(ci===''||e.ci==+ci)&&(sem===''||COURSES[e.ci][3]==+sem));
+  fl.innerHTML=rows.map(e=>{
+    const d=new Date(e.date+'T00:00:00');
+    return '<div class="fl-row'+(e.date<todayISO?' past':'')+'"><span class="fl-date">'+d.toLocaleDateString('en-GB',{weekday:'short',day:'2-digit',month:'short'})+' '+String(d.getFullYear()).slice(2)+'</span><span class="fl-time">'+e.start+'–'+e.end+'</span><span>'+tc(COURSES[e.ci][0])+' <span class="kn">· '+COURSES[e.ci][2]+'</span></span></div>';
+  }).join('')||'<div class="none" style="padding:10px">No sessions match.</div>';
+}
+fc.addEventListener('change',render);fs.addEventListener('change',render);
+render();
+</script>
+</body>
+</html>
