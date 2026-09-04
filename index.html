@@ -96,6 +96,12 @@ select{flex:1;padding:8px 10px;border-radius:8px;border:1px solid var(--border);
     <div id="keydates"></div>
   </div>
 
+  <div class="card" style="border:2px solid var(--warn-border)">
+    <div class="card-label">Your exam dates (official UPV exam calendar)</div>
+    <div id="examlist"></div>
+    <p class="note">Rooms not yet published. ⚠ Dec 15 shows two exams in the same slot (Participative Mgmt + New Trends), and Dec 16 too (Senior Mgmt &amp; IT + Research Methodologies) — confirm with the faculty how that works. No exam listed for Knowledge Transfer (likely continuous assessment).</p>
+  </div>
+
   <div class="card warn">
     <div class="card-label">Still double-check on UPV Intranet</div>
     <ul>
@@ -114,13 +120,28 @@ select{flex:1;padding:8px 10px;border-radius:8px;border:1px solid var(--border);
     <div id="full-list" class="full-list"></div>
   </div>
 
-  <p class="footer">Built from official UPV group calendars (GA1 + GB1, exported Jul 30, 2026) + FADE academic calendar. Times are Europe/Madrid. "Today" recalculates automatically each time you open this page.</p>
+  <p class="footer">Built from Alanoud's personal UPV enrollment calendar (verified Sep 4, 2026) + FADE academic calendar. Times are Europe/Madrid. "Today" recalculates automatically each time you open this page.</p>
 </section>
 
 <script>
-const COURSES=[["SENIOR MANAGEMENT AND INFORMATION TECHNOLOGIES","González Ladrón de Guevara, Fernando Raimundo","SEMINARIO 4.3",1],["PARTICIPATIVE MANAGEMENT AND TEAMWORK FOR SERVICE IMPROVEMENT","Marín García, Juan Antonio","SEMINARIO 4.3",1],["RESEARCH METHODOLOGIES","Miguel Molina, Maria Rosario de","SEMINARIO 4.3",1],["NEW TRENDS IN SERVICE STRATEGIES","Miguel Molina, María Blanca de","SEMINARIO 4.3",1],["METHODS AND TOOLS FOR BUSINESS DECISION-MAKING","Trull Domínguez, Óscar","SEMINARIO 4.3",1],["OPERATIONS MANAGEMENT","Peiró Signes, Ángel","SEMINARIO 4.3",1],["TECHNOLOGICAL ENTREPRENEURSHIP","Ribes Giner, Gabriela","SEMINARIO 4.3",1],["MANAGERIAL UNIVERSITY-COMPANIES KNOWLEDGE TRANSFER","Catalá Pérez, Daniel","SEMINARIO 0.1",1],["INNOVATION MANAGEMENT","Carrascosa López, Conrado Enrique","SEMINARIO 4.3",2],["NEW PRODUCT DEVELOPMENT","Sánchez Planelles, Joaquín","SEMINARIO 4.3",2],["PRODUCT PROJECT","Segarra Oña, María del Val","SEMINARIO 0.1",2],["SERVICE AND SALES","Miguel Molina, Maria Rosario de","SEMINARIO 4.3",2],["LOGISTICS","","SEMINARIO 4.3",2]];
+const COURSES=[["SENIOR MANAGEMENT AND INFORMATION TECHNOLOGIES","González Ladrón de Guevara (+ M.R. de Miguel Molina, some sessions)","SEMINARIO 4.3",1],["PARTICIPATIVE MANAGEMENT AND TEAMWORK FOR SERVICE IMPROVEMENT","Marín García, Juan Antonio","SEMINARIO 4.3",1],["RESEARCH METHODOLOGIES","Miguel Molina, Maria Rosario de","SEMINARIO 4.3",1],["NEW TRENDS IN SERVICE STRATEGIES","Miguel Molina, María Blanca de","SEMINARIO 4.3",1],["METHODS AND TOOLS FOR BUSINESS DECISION-MAKING","Trull Domínguez, Óscar","SEMINARIO 4.3",1],["OPERATIONS MANAGEMENT","Peiró Signes, Ángel","SEMINARIO 4.3",1],["TECHNOLOGICAL ENTREPRENEURSHIP","Ribes Giner, Gabriela","SEMINARIO 4.3",1],["MANAGERIAL UNIVERSITY-COMPANIES KNOWLEDGE TRANSFER","Catalá Pérez, Daniel","SEMINARIO 0.1",1],["INNOVATION MANAGEMENT","Carrascosa López, Conrado Enrique","SEMINARIO 4.3",2],["NEW PRODUCT DEVELOPMENT","Sánchez Planelles, Joaquín","SEMINARIO 4.3",2],["PRODUCT PROJECT","Segarra Oña / Canós Darós / de Miguel Molina (rotating)","SEMINARIO 0.1 / 0.2",2],["SERVICE AND SALES","Miguel Molina, Maria Rosario de","SEMINARIO 4.3",2],["LOGISTICS","","SEMINARIO 4.3",2]];
 const EVENTS=[["2026-09-08","15:00","17:00",0],["2026-09-08","17:20","21:30",1],["2026-09-09","15:00","17:30",2],["2026-09-09","17:50","20:00",3],["2026-09-10","15:00","17:10",0],["2026-09-10","17:30","20:00",4],["2026-09-11","15:00","17:30",5],["2026-09-14","15:00","17:30",6],["2026-09-14","17:50","19:50",3],["2026-09-15","15:00","17:00",0],["2026-09-15","17:20","21:30",1],["2026-09-16","15:00","17:30",2],["2026-09-16","17:50","20:00",3],["2026-09-17","09:00","14:00",7],["2026-09-17","15:00","17:10",0],["2026-09-17","17:30","20:00",4],["2026-09-18","15:00","17:30",5],["2026-09-21","15:00","17:30",6],["2026-09-21","17:50","19:50",3],["2026-09-22","15:00","17:00",0],["2026-09-22","17:20","21:30",1],["2026-09-23","15:00","17:30",2],["2026-09-23","17:50","20:00",3],["2026-09-24","15:00","17:10",0],["2026-09-24","17:30","20:00",4],["2026-09-25","15:00","17:30",5],["2026-09-28","15:00","17:30",6],["2026-09-28","17:50","19:50",3],["2026-09-29","15:00","17:00",0],["2026-09-29","17:20","21:30",1],["2026-09-30","15:00","17:30",2],["2026-09-30","17:50","20:00",3],["2026-10-01","15:00","17:10",0],["2026-10-01","17:30","20:00",4],["2026-10-02","09:00","14:00",7],["2026-10-02","15:00","17:30",5],["2026-10-05","15:00","17:30",6],["2026-10-05","17:50","19:50",3],["2026-10-06","15:00","17:00",0],["2026-10-06","17:20","21:30",1],["2026-10-07","15:00","17:30",2],["2026-10-07","17:50","20:00",3],["2026-10-08","15:00","17:10",0],["2026-10-08","17:30","20:00",4],["2026-10-13","15:00","17:00",0],["2026-10-13","17:20","21:30",1],["2026-10-14","15:00","17:30",2],["2026-10-14","17:50","20:00",3],["2026-10-15","09:00","14:00",7],["2026-10-15","15:00","17:10",0],["2026-10-15","17:30","20:00",4],["2026-10-16","15:00","17:30",5],["2026-10-19","15:00","17:30",6],["2026-10-19","17:50","19:50",3],["2026-10-20","15:00","17:00",0],["2026-10-20","17:20","21:30",1],["2026-10-21","15:00","17:30",2],["2026-10-21","17:50","20:00",3],["2026-10-22","15:00","17:10",0],["2026-10-22","17:30","20:00",4],["2026-10-23","15:00","17:30",5],["2026-10-26","15:00","17:30",6],["2026-10-26","17:50","19:50",3],["2026-10-27","15:00","17:00",0],["2026-10-27","17:20","21:30",1],["2026-10-28","15:00","17:30",2],["2026-10-28","17:50","20:00",3],["2026-10-29","15:00","17:10",0],["2026-10-29","17:30","20:00",4],["2026-10-30","09:00","14:00",7],["2026-10-30","15:00","17:30",5],["2026-11-02","15:00","17:30",6],["2026-11-02","17:50","19:50",3],["2026-11-03","15:00","17:00",0],["2026-11-03","17:20","21:30",1],["2026-11-04","15:00","17:30",2],["2026-11-04","17:50","20:00",3],["2026-11-05","15:00","17:10",0],["2026-11-05","17:30","20:00",4],["2026-11-06","15:00","17:30",5],["2026-11-09","15:00","17:30",6],["2026-11-09","17:50","19:50",3],["2026-11-10","15:00","17:00",0],["2026-11-10","17:20","21:30",1],["2026-11-11","15:00","17:30",2],["2026-11-11","17:50","20:00",3],["2026-11-12","09:00","14:00",7],["2026-11-12","15:00","17:10",0],["2026-11-12","17:30","20:00",4],["2026-11-13","15:00","17:30",5],["2026-11-16","15:00","17:30",6],["2026-11-16","17:50","19:50",3],["2026-11-17","15:00","17:00",0],["2026-11-17","17:20","21:30",1],["2026-11-18","15:00","17:30",2],["2026-11-18","17:50","20:00",3],["2026-11-19","15:00","17:10",0],["2026-11-19","17:30","20:00",4],["2026-11-20","15:00","17:30",5],["2026-11-23","15:00","17:30",6],["2026-11-23","17:50","19:50",3],["2026-11-24","15:00","17:00",0],["2026-11-24","17:20","21:30",1],["2026-11-25","15:00","17:30",2],["2026-11-25","17:50","20:00",3],["2026-11-26","15:00","17:10",0],["2026-11-26","17:30","20:00",4],["2026-11-27","09:00","14:00",7],["2026-11-27","15:00","17:30",5],["2026-11-30","15:00","17:30",6],["2026-11-30","17:50","19:50",3],["2027-02-16","15:00","17:00",8],["2027-02-16","17:25","19:25",9],["2027-02-17","09:00","11:20",10],["2027-02-17","11:30","14:00",10],["2027-02-17","17:00","19:00",10],["2027-02-18","15:00","17:00",11],["2027-02-18","17:25","19:25",12],["2027-02-23","15:00","17:00",8],["2027-02-23","17:25","19:25",9],["2027-02-24","09:00","11:20",10],["2027-02-24","11:30","14:00",10],["2027-02-24","17:00","19:00",10],["2027-02-25","15:00","17:00",11],["2027-02-25","17:25","19:25",12],["2027-03-02","15:00","17:00",8],["2027-03-02","17:25","19:25",9],["2027-03-03","09:00","11:20",10],["2027-03-03","11:30","14:00",10],["2027-03-03","17:00","19:00",10],["2027-03-04","15:00","17:00",11],["2027-03-04","17:25","19:25",12],["2027-03-09","15:00","17:00",8],["2027-03-09","17:25","19:25",9],["2027-03-10","09:00","11:20",10],["2027-03-10","11:30","14:00",10],["2027-03-10","17:00","19:25",10],["2027-03-11","15:00","17:00",11],["2027-03-11","17:25","19:25",12],["2027-04-06","15:00","17:00",8],["2027-04-06","17:25","19:25",9],["2027-04-07","09:00","11:20",10],["2027-04-07","11:30","14:00",10],["2027-04-07","17:00","19:00",10],["2027-04-08","15:00","17:00",11],["2027-04-08","17:25","19:25",12],["2027-04-13","15:00","17:00",8],["2027-04-13","17:25","19:25",9],["2027-04-14","09:00","11:20",10],["2027-04-14","11:30","14:00",10],["2027-04-14","17:00","19:00",10],["2027-04-15","15:00","17:00",11],["2027-04-15","17:25","19:25",12],["2027-04-20","15:00","17:00",8],["2027-04-20","17:25","19:25",9],["2027-04-21","09:00","11:20",10],["2027-04-21","11:30","14:00",10],["2027-04-21","17:00","19:00",10],["2027-04-22","15:00","17:00",11],["2027-04-22","17:25","19:25",12],["2027-04-27","15:00","17:00",8],["2027-04-27","17:25","19:25",9],["2027-04-28","09:00","11:20",10],["2027-04-28","11:30","14:00",10],["2027-04-28","17:00","19:00",10],["2027-04-29","15:00","17:00",11],["2027-04-29","17:25","19:25",12],["2027-05-04","15:00","17:00",8],["2027-05-04","17:25","19:25",9],["2027-05-05","09:00","11:20",10],["2027-05-05","11:30","14:00",10],["2027-05-05","17:00","19:00",10],["2027-05-06","15:00","17:00",11],["2027-05-06","17:25","19:25",12],["2027-05-11","15:00","17:00",8],["2027-05-11","17:25","19:25",9],["2027-05-12","09:00","11:20",10],["2027-05-12","11:30","14:00",10],["2027-05-12","17:00","19:00",10],["2027-05-13","15:00","17:00",11],["2027-05-13","17:25","19:25",12],["2027-05-18","15:00","17:00",8],["2027-05-18","17:25","19:25",9],["2027-05-19","09:00","11:20",10],["2027-05-19","11:30","14:00",10],["2027-05-19","17:00","19:00",10],["2027-05-20","15:00","17:00",11],["2027-05-20","17:25","19:25",12]];
 const COLORS=["#1D7A8C","#B0355C","#3D8B45","#E07A2B","#8C5A1D","#4056A1","#6343BC","#6E6E6E","#009900","#B0355C","#1D7A8C","#8C5A1D","#6343BC"];
+const EXAMS=[
+ ["2026-12-10","16:00","18:00","Methods and Tools for Business Decision-Making"],
+ ["2026-12-11","16:00","18:00","Operations Management"],
+ ["2026-12-14","16:00","18:00","Technological Entrepreneurship"],
+ ["2026-12-15","16:00","18:00","Participative Management and Teamwork"],
+ ["2026-12-15","16:00","18:00","New Trends in Service Strategies"],
+ ["2026-12-16","16:00","18:00","Senior Management and Information Technologies"],
+ ["2026-12-16","16:00","18:00","Research Methodologies"],
+ ["2027-05-24","16:00","18:00","Innovation Management"],
+ ["2027-05-25","16:00","18:00","New Product Development"],
+ ["2027-05-26","09:00","11:00","Product Project"],
+ ["2027-05-27","16:00","18:00","Service and Sales"],
+ ["2027-05-28","16:00","18:00","Logistics"]
+];
+const examEvs=EXAMS.map(e=>({date:e[0],start:e[1],end:e[2],exam:e[3]}));
 
 function tc(s){return s.toLowerCase().split(' ').map(w=>w.length>2?w[0].toUpperCase()+w.slice(1):w).join(' ');}
 function pad(n){return String(n).padStart(2,'0');}
@@ -134,7 +155,14 @@ const nowHM=pad(now.getHours())+':'+pad(now.getMinutes());
 document.getElementById('today-date').textContent=fmtLong(now);
 
 const all=evObjs();
+const combined=all.concat(examEvs);
 function clsHTML(e,extra){
+  if(e.exam){
+    return '<div class="cls '+(extra||'')+'" style="border-left-color:#c62828">'
+      +'<div class="cls-time">'+e.start+'–'+e.end+'</div>'
+      +'<div><div class="cls-name">EXAM — '+e.exam+'</div>'
+      +'<div class="cls-meta">Room TBD — check UPV Intranet</div></div></div>';
+  }
   const c=COURSES[e.ci];
   return '<div class="cls '+(extra||'')+'" style="border-left-color:'+COLORS[e.ci]+'">'
     +'<div class="cls-time">'+e.start+'–'+e.end+'</div>'
@@ -142,7 +170,7 @@ function clsHTML(e,extra){
     +'<div class="cls-meta">'+c[2]+' · Edificio 7J'+(c[1]?' · '+c[1]:'')+'</div></div></div>';
 }
 
-const todays=all.filter(e=>e.date===todayISO).sort((a,b)=>a.start.localeCompare(b.start));
+const todays=combined.filter(e=>e.date===todayISO).sort((a,b)=>a.start.localeCompare(b.start));
 const tEl=document.getElementById('today-classes');
 if(!todays.length){tEl.innerHTML='<div class="none">No classes today.</div>';}
 else{
@@ -153,11 +181,19 @@ else{
     return clsHTML(e,x);
   }).join('');
 }
-const future=all.filter(e=>e.date>todayISO).sort((a,b)=>(a.date+a.start).localeCompare(b.date+b.start));
+const future=combined.filter(e=>e.date>todayISO).sort((a,b)=>(a.date+a.start).localeCompare(b.date+b.start));
 const nEl=document.getElementById('next-up');
 if(future.length){
   const n=future[0];const nd=new Date(n.date+'T00:00:00');
-  nEl.innerHTML='Next class: <b>'+tc(COURSES[n.ci][0])+'</b> — '+fmtLong(nd)+', '+n.start+'–'+n.end+' ('+COURSES[n.ci][2]+')';
+  const label=n.exam?('<b style="color:#c62828">EXAM — '+n.exam+'</b>'):('<b>'+tc(COURSES[n.ci][0])+'</b>');
+  const loc=n.exam?'room TBD':COURSES[n.ci][2];
+  nEl.innerHTML='Next: '+label+' — '+fmtLong(nd)+', '+n.start+'–'+n.end+' ('+loc+')';
+  const nextExam=future.find(e=>e.exam);
+  if(nextExam&&!future[0].exam){
+    const xd=new Date(nextExam.date+'T00:00:00');
+    const days=Math.round((xd-new Date(todayISO+'T00:00:00'))/86400000);
+    nEl.innerHTML+='<br>Next exam: <b style="color:#c62828">'+nextExam.exam+'</b> — '+fmtLong(xd)+' ('+days+' days away)';
+  }
 }else{nEl.textContent='No more classes in this calendar.';}
 
 function monOf(d){const dd=new Date(d);const day=dd.getDay();dd.setDate(dd.getDate()+(day===0?-6:1-day));dd.setHours(0,0,0,0);return dd;}
@@ -166,11 +202,13 @@ let wh='';let any=false;
 for(let i=0;i<5;i++){
   const d=new Date(mon);d.setDate(mon.getDate()+i);
   const di=iso(d);
-  const evs=all.filter(e=>e.date===di).sort((a,b)=>a.start.localeCompare(b.start));
+  const evs=combined.filter(e=>e.date===di).sort((a,b)=>a.start.localeCompare(b.start));
   if(evs.length)any=true;
   wh+='<div class="wk-day"><div class="wk-day-h'+(di===todayISO?' today':'')+'">'
     +d.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'short'})+(di===todayISO?' · today':'')+'</div>';
-  wh+=evs.length?evs.map(e=>'<div class="pill" style="border-left-color:'+COLORS[e.ci]+'"><b>'+e.start+'–'+e.end+'</b> '+tc(COURSES[e.ci][0])+'</div>').join(''):'<div class="none" style="font-size:.78rem">—</div>';
+  wh+=evs.length?evs.map(e=>e.exam
+    ?'<div class="pill" style="border-left-color:#c62828"><b>'+e.start+'–'+e.end+'</b> EXAM — '+e.exam+'</div>'
+    :'<div class="pill" style="border-left-color:'+COLORS[e.ci]+'"><b>'+e.start+'–'+e.end+'</b> '+tc(COURSES[e.ci][0])+'</div>').join(''):'<div class="none" style="font-size:.78rem">—</div>';
   wh+='</div>';
 }
 document.getElementById('week-view').innerHTML=any?wh:'<div class="none">No classes this week (out of term).</div>';
@@ -183,15 +221,21 @@ document.getElementById('pat2').innerHTML=patHTML(P2);
 
 const KD=[
  ["Sep 7, 2026","Orientation (Jornadas de Acogida)","first real class Sep 8",0],
- ["Dec 1–10, 2026","Exam period A","semester 1 finals",1],
+ ["Dec 10–16, 2026","Your semester 1 exams","exact slots in exam list below",1],
  ["Jan 18–21, 2027","Compensatory exams A","make-ups for semester 1",1],
  ["Feb 16, 2027","Semester 2 starts","",0],
  ["Mar 22–May 7, 2027","Extraordinary evaluation (2nd)","eligible students only",0],
- ["May 24–28, 2027","Exam period B","semester 2 finals",1],
+ ["May 24–28, 2027","Your semester 2 exams","exact slots in exam list below",1],
  ["Jun 14–17, 2027","Compensatory exams B","make-ups for semester 2",1],
  ["Jul 22–Sep 3, 2027","Extraordinary evaluation (3rd)","",0]
 ];
 document.getElementById('keydates').innerHTML=KD.map(([d,t,n,big])=>'<div class="keyrow'+(big?' big':'')+'"><span class="kd">'+d+'</span><span>'+t+(n?' <span class="kn">— '+n+'</span>':'')+'</span></div>').join('');
+
+document.getElementById('examlist').innerHTML=EXAMS.map(e=>{
+  const d=new Date(e[0]+'T00:00:00');
+  const past=e[0]<todayISO;
+  return '<div class="keyrow'+(past?'" style="opacity:.45':'')+'"><span class="kd" style="color:#c62828">'+d.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric'})+'</span><span><b>'+e[1]+'–'+e[2]+'</b> · '+e[3]+'</span></div>';
+}).join('');
 
 const fc=document.getElementById('f-course'),fs=document.getElementById('f-sem'),fl=document.getElementById('full-list');
 COURSES.map((c,i)=>({i,n:tc(c[0])})).sort((a,b)=>a.n.localeCompare(b.n)).forEach(({i,n})=>{
