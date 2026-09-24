@@ -102,6 +102,33 @@ select{flex:1;padding:8px 10px;border-radius:8px;border:1px solid var(--border);
     <p class="note">Rooms not yet published. ⚠ Dec 15 shows two exams in the same slot (Participative Mgmt + New Trends), and Dec 16 too (Senior Mgmt &amp; IT + Research Methodologies) — confirm with the faculty how that works. No exam listed for Knowledge Transfer (likely continuous assessment).</p>
   </div>
 
+  <div class="card" style="border:2px solid #c62828">
+    <div class="card-label" style="color:#c62828">Assignments &amp; deadlines</div>
+    <div id="assignlist"></div>
+  </div>
+
+  <div class="card" id="changes-card" style="border:2px solid #e8c574">
+    <div class="card-label" style="color:#b06000">↔ One-off schedule changes</div>
+    <div id="changelist"></div>
+  </div>
+
+  <div class="card" style="border:2px solid #7c3aed">
+    <div class="card-label" style="color:#7c3aed">Appointments &amp; admin</div>
+    <div id="apptlist"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-label">New Trends in Service Strategies — weekly plan</div>
+    <div id="ntsplan"></div>
+    <p class="note">Mondays 17:50–19:50 · Wednesdays 17:50–20:00, Seminario 4.3. Prof. Blanca de Miguel Molina, except <b>w11 (16 &amp; 18 Nov) taught by Barbara</b>. <span style="color:#c62828">Red = EXPOSITIONS</span> (presentation days). No Monday session in w6 — Oct 12 is a national holiday. Weekly task detail is added as the professor publishes it.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-label">Research Methodologies — session plan &amp; assignments</div>
+    <div id="rmplan"></div>
+    <p class="note"><b>Grading:</b> assignments 1–5 &amp; 7–10 = 50% · Protocol (A6) = 20% · Final work (A11) = 30%. Only the final work can be re-evaluated if failed (December or January).<br><b>GenAI policy:</b> allowed only to improve readability/language, with a declaration statement at the end of the work — you're accountable for the content.<br>Assignments are listed under the session where they're <i>set</i>; the plan doesn't state due dates, so confirm those in class. The professor notes "some changes could be made".</p>
+  </div>
+
   <div class="card warn">
     <div class="card-label">Still double-check on UPV Intranet</div>
     <ul>
@@ -142,12 +169,125 @@ const EXAMS=[
  ["2027-05-28","16:00","18:00","Logistics"]
 ];
 const examEvs=EXAMS.map(e=>({date:e[0],start:e[1],end:e[2],exam:e[3]}));
+const RM_PLAN={
+ "2026-09-09":["S1","Course presentation. The scientific method.","A1: create a Scopus account + run a search (individual)"],
+ "2026-09-16":["S1","What is a literature review. Research questions.","A2: FINER + list of 20 cleaned references (individual)"],
+ "2026-09-23":["S1","Protocol &amp; defining the main concepts.","A3 &amp; A4: PRISMA flow + 5 PDFs; map &amp; infographics (individual)"],
+ "2026-09-30":["S1","Software for analysis. VosViewer.","A5: review PDFs + visualization (individual)"],
+ "2026-10-07":["S1","PRESENTATIONS.","A6: Presentation 1 — Protocols (individual) · worth 20%"],
+ "2026-10-14":["S2","Content analysis. In-depth individual interviews.","A7: interview — work in pairs"],
+ "2026-10-21":["S2","Ethnography. Case studies. Observation, scenario method.","A8: work in teams"],
+ "2026-10-28":["S2","Caixa Forum — off-site session (marked “?” in the plan, confirm)","A9: observation, outdoors (individual)"],
+ "2026-11-04":["S2","Focus group interviews. Fishbowls.","A10: work in teams"],
+ "2026-11-11":["S3","Review session. Checklist + prepare presentation.",""],
+ "2026-11-18":["S3","FINAL SESSION 1.","A11: Presentation 2 + final work (document &amp; presentation) · worth 30%"],
+ "2026-11-25":["S3","FINAL SESSION 2.","A11: Presentation 2 + final work (document &amp; presentation) · worth 30%"]
+};
+function rmNote(e){ return (COURSES[e.ci] && COURSES[e.ci][0]==='RESEARCH METHODOLOGIES' && RM_PLAN[e.date]) ? RM_PLAN[e.date] : null; }
+// New Trends in Service Strategies — full course plan (13 weeks, Prof. Blanca de Miguel Molina)
+const NTS_PLAN={
+ "2026-09-09":{w:"w1",unit:"Introducing the subject · T1. Strategy and business model",cs:"Case 1",prof:"Blanca"},
+ "2026-09-14":{w:"w2",unit:"T2. Strategic environment",cs:"Case 2",prof:"Blanca",before:["Read Case 2. Tesla"],during:["Concepts w2","Case 2. Task 1"],extra:"Links to Master Plans 1, 2, 3, 4"},
+ "2026-09-16":{w:"w2",unit:"T2. Strategic environment",cs:"Case 2",prof:"Blanca",before:["Read Case 2. Tesla"],during:["Concepts w2","Test w2","Case 2. Task 2"],after:["Test 2"]},
+ "2026-09-21":{w:"w3",unit:"T3. Competitive advantage",cs:"Case 3",prof:"Blanca"},
+ "2026-09-23":{w:"w3",unit:"T3. Competitive advantage",cs:"Case 3",prof:"Blanca"},
+ "2026-09-28":{w:"w4",unit:"T4. Business model (I), analysis",cs:"Case 4",prof:"Blanca"},
+ "2026-09-30":{w:"w4",unit:"T5. Business models (II), platforms and ecosystems",cs:"Case 5",prof:"Blanca"},
+ "2026-10-05":{w:"w5",unit:"T5. Business models (II), platforms and ecosystems",cs:"Case 5",prof:"Blanca"},
+ "2026-10-07":{w:"w5",unit:"T6. Strategic change",cs:"Case 6",prof:"Blanca"},
+ "2026-10-14":{w:"w6",unit:"EXPOSITIONS (Competitive advantage)",cs:"",prof:"Blanca",expo:true},
+ "2026-10-19":{w:"w7",unit:"EXPOSITIONS (BMs)",cs:"",prof:"Blanca",expo:true},
+ "2026-10-21":{w:"w7",unit:"EXPOSITIONS (BMs of platforms and ecosystems)",cs:"",prof:"Blanca",expo:true},
+ "2026-10-26":{w:"w8",unit:"T7. Blue Ocean Strategy",cs:"Case 7",prof:"Blanca"},
+ "2026-10-28":{w:"w8",unit:"T7. Blue Ocean Strategy",cs:"Case 7",prof:"Blanca"},
+ "2026-11-02":{w:"w9",unit:"EXPOSITIONS (Strategic change)",cs:"",prof:"Blanca",expo:true},
+ "2026-11-04":{w:"w9",unit:"EXPOSITIONS (BOS)",cs:"",prof:"Blanca",expo:true},
+ "2026-11-09":{w:"w10",unit:"T8. Corporate strategy",cs:"Case 8",prof:"Blanca"},
+ "2026-11-11":{w:"w10",unit:"T8. Corporate strategy",cs:"Case 8",prof:"Blanca"},
+ "2026-11-16":{w:"w11",unit:"T9. Sustainability &amp; CSR",cs:"Case 9",prof:"Barbara"},
+ "2026-11-18":{w:"w11",unit:"T9. Sustainability &amp; CSR",cs:"Case 9",prof:"Barbara"},
+ "2026-11-23":{w:"w12",unit:"T8. Corporate strategy <span class=\"kn\">(listed as T8 again — possibly a typo)</span>",cs:"Case 10",prof:"Blanca"},
+ "2026-11-25":{w:"w12",unit:"EXPOSITIONS (Corporate strategy; Sustainability &amp; CSR)",cs:"",prof:"Blanca",expo:true},
+ "2026-11-30":{w:"w13",unit:"Tasks",cs:"",prof:"Blanca"}
+};
+function ntsNote(e){ return (COURSES[e.ci] && COURSES[e.ci][0]==='NEW TRENDS IN SERVICE STRATEGIES' && NTS_PLAN[e.date]) ? NTS_PLAN[e.date] : null; }
+// Graded deliverables with their own deadlines
+const ASSIGNMENTS=[
+ {due:"2026-09-28",course:"Methods and Tools for Business Decision-Making",mode:"Online assessment",
+  title:"“Session: Descriptive” assessment — due Mon 28 Sep, 23:50",
+  brief:"Exam on concepts from the <b>first part — statistics</b>. <b>No time limit</b>, and you get <b>2 attempts</b> — your highest score is recorded, but answers from the first attempt aren't visible during the second.",
+  format:"Questions are <b>monitored by how long you take on each one</b>, and a question's text only appears once you press <b>Start</b> on it. Open only one assessment at a time.",
+  submit:"PoliformaT → Methods and Tools → Tests &amp; Quizzes → “Session : Descriptive”. Tick the honour pledge, then Begin Assessment.",
+  parts:[],
+  note:"⚠ Two dates on the page: <b>due Mon 28 Sep 23:50</b>, but anything saved and unsubmitted is <b>auto-submitted Wed 30 Sep 23:50</b>. Treat 28 Sep as the real deadline — the later date is a safety net, not an extension. You're in class Mon 15:00–19:50, so finish it before then or leave the evening free."},
+ {due:"2026-09-29",course:"Participative Management &amp; Teamwork",mode:"Individual fieldwork",
+  title:"Draft your interview questions (bring to class)",
+  brief:"<b>Step 1 — due next class:</b> come with a set of questions prepared. <br><b>Step 2 — later:</b> find <b>5 people who have worked recently</b> and interview each for about <b>one hour</b> about the business processes they carried out in their job — how work actually got done, who was involved, how it was measured. Example probe: <i>“in your company, are there quality figures / indicators?”</i>",
+  format:"Questions first; then 5 interviews × ~1 hour each.",
+  submit:"Bring the questions to the Tuesday session — no upload mentioned. Interview deadline not set yet.",
+  parts:[],
+  note:"Gestión Participativa · Prof. Juan Antonio Marín García · Tuesdays 17:20–21:30, Seminario 4.3. Plan the recruiting early — five one-hour interviews is the slow part, not the writing."},
+ {due:"2026-10-14",course:"New Trends in Service Strategies",mode:"Individual",
+  title:"Individual task 1 — Competitive advantage (oral presentation)",
+  brief:"Pick a company <b>not</b> among those used in the class cases. Your role is a strategic consultant hired by that company. Objective: evaluate whether it has a <b>sustainable competitive advantage</b> and whether its current strategy suits future competition. Applies concepts from Units 2 &amp; 3. Choose a firm with enough public information on its website — big companies usually publish more, but pick one you're actually interested in.<br><span style=\"color:#c62828\"><b>⚠ Professor's requirement: the company must publish an annual report.</b> Check that one exists (and ideally the most recent year) before committing to your choice — listed companies and large groups normally have an \"Investors\" or \"Investor relations\" page.</span>",
+  format:"Slides — max <b>10 slides</b>, not counting title, index and references slides.",
+  submit:"Export the PPT to <b>PDF</b> and upload to PoliformaT → \"Task\" folder → task named <i>\"Individual task 1. Competitive advantage\"</i>.",
+  parts:[
+   ["1. Company overview","10%","One slide: mission &amp; vision (if available), industry, main services, geographic scope, key competitors."],
+   ["2. Strategic environment analysis","15%","Porter's Five Forces — identify the biggest strategic challenge the company faces over the next five years."],
+   ["3. Sources of competitive advantage","25%","Resource-Based View &amp; Dynamic Capabilities: 3 resources + 3 capabilities. VRIO each one (valuable, rare, hard to imitate, supported by the organisation). Which capability is hardest for competitors to copy, and why?"],
+   ["4. Competitive strategy assessment","15%","Cost leadership, differentiation, focus or hybrid? Back it with evidence. Is the strategy consistent with its resources and capabilities?"],
+   ["5. Strategic agility &amp; dynamic capabilities","10%","How does it respond to technological change, new competitors, regulatory change, shifting customer preferences? Is the advantage sustainable or temporary?"],
+   ["6. Competitor challenge","15%","Pick its biggest competitor and compare competitive positioning, resources and capabilities. Who is better positioned for the future, and why?"],
+   ["7. Strategic recommendation","10%","Propose one major initiative (new market, ecosystem strategy, AI as a strategic capability, acquisition, alliances, repositioning the service offer) with expected benefits, risks and resources required."]
+  ],
+  note:"The brief says to confirm the exact deadline in PoliformaT → Lessons → Course organisation. Oct 14 is also the EXPOSITIONS (Competitive advantage) session, so plan to present that evening."}
+];
+// Admin action items with their own deadlines
+const ACTIONS=[
+ {due:"2026-10-06",course:"New Trends in Service Strategies",
+  title:"Email to choose your exposition date",
+  detail:"Must be sent <b>before Wednesday 7 October</b> — so <b>Tuesday 6 Oct</b> is the last safe day. Your previous New Trends session is Mon 5 Oct, a good moment to confirm the options in person.",
+  options:"Exposition sessions on the course plan: <b>Wed 14 Oct</b> (Competitive advantage) · <b>Mon 19 Oct</b> (BMs) · <b>Wed 21 Oct</b> (BMs of platforms &amp; ecosystems) · <b>Mon 2 Nov</b> (Strategic change) · <b>Wed 4 Nov</b> (BOS) · <b>Wed 25 Nov</b> (Corporate strategy; Sustainability &amp; CSR).",
+  include:"<b>The email must state two things:</b> (1) the exposition <b>date/time</b> you're choosing, and (2) the <b>company</b> you've picked for Individual task 1 — remember it has to publish an annual report.",
+  note:"Whichever date you book is when you present Individual task 1, so it may move that deadline off 14 Oct — update this page once it's confirmed."}
+];
+function dueOn(date){ return ASSIGNMENTS.filter(a=>a.due===date); }
+function actionOn(date){ return ACTIONS.filter(a=>a.due===date); }
+function ntsHTML(p){
+  let h='<div'+(p.expo?' style="color:#c62828"':'')+'><b>'+p.unit+'</b>'+(p.cs?' · '+p.cs:'')+'</div>';
+  if(p.prof==='Barbara') h+='<div style="color:#7c3aed"><b>Taught by Barbara</b> (not Blanca)</div>';
+  if(p.before&&p.before.length) h+='<div style="color:#b06000"><b>Before:</b> '+p.before.join(' · ')+'</div>';
+  if(p.during&&p.during.length) h+='<div><b>In class:</b> '+p.during.join(' · ')+'</div>';
+  if(p.after&&p.after.length) h+='<div style="color:#c62828"><b>After:</b> '+p.after.join(' · ')+'</div>';
+  if(p.extra) h+='<div>'+p.extra+'</div>';
+  return h;
+}
+const APPTS=[
+ {date:"2026-10-21",start:"—",title:"Collect your TIE card",
+  where:"Carrer dels Gremis 6, Valencia 46014 (same police station)",
+  bring:["Passport","The resguardo / receipt they gave you at the appointment on 21 Sep"],
+  note:"Appointment completed 21 Sep 2026; cards are typically ready about 30 days later. Confirm the collection procedure — some stations require a separate cita previa to pick up, others accept walk-ins during set hours."}
+];
+const apptEvs=APPTS.map(a=>({date:a.date,start:a.start,end:a.start,appt:a}));
+// One-off swaps announced by email. Key: date|start. ci = replacement course index.
+const CHANGES={
+ "2026-09-17|17:30":{ci:5,note:"Swapped this week — special seminar <b>“Personal Branding”</b> by Prof. Efendi Haslim (Atma Jaya University, Indonesia). Takes the Methods &amp; Tools slot."},
+ "2026-09-18|15:00":{ci:4,note:"Swapped this week — moved here from Thursday, in place of Operations Management."}
+};
+const CHANGE_LIST=[
+ ["2026-09-17","17:30–20:00","Operations Management — special seminar “Personal Branding”","Prof. Efendi Haslim, Atma Jaya University (Indonesia). Replaces the usual Methods &amp; Tools slot. Announced by Ángel Peiró Signes &amp; Óscar Trull Domínguez."],
+ ["2026-09-18","15:00–17:30","Methods and Tools for Business Decision-Making","Moved from its usual Thursday slot; takes the Operations Management Friday slot this week."]
+];
 
 function tc(s){return s.toLowerCase().split(' ').map(w=>w.length>2?w[0].toUpperCase()+w.slice(1):w).join(' ');}
 function pad(n){return String(n).padStart(2,'0');}
 function iso(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());}
 function fmtLong(d){return d.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});}
-function evObjs(){return EVENTS.map(e=>({date:e[0],start:e[1],end:e[2],ci:e[3]}));}
+function evObjs(){return EVENTS.map(e=>{
+  const c=CHANGES[e[0]+'|'+e[1]];
+  return {date:e[0],start:e[1],end:e[2],ci:c?c.ci:e[3],chg:c?c.note:null};
+});}
 
 const now=new Date();
 const todayISO=iso(now);
@@ -155,8 +295,17 @@ const nowHM=pad(now.getHours())+':'+pad(now.getMinutes());
 document.getElementById('today-date').textContent=fmtLong(now);
 
 const all=evObjs();
-const combined=all.concat(examEvs);
+const combined=all.concat(examEvs).concat(apptEvs);
 function clsHTML(e,extra){
+  if(e.appt){
+    const a=e.appt;
+    return '<div class="cls '+(extra||'')+'" style="border-left-color:#7c3aed">'
+      +'<div class="cls-time">'+a.start+'</div>'
+      +'<div><div class="cls-name">📍 '+a.title+'</div>'
+      +'<div class="cls-meta">'+a.where+'</div>'
+      +(a.warn?'<div class="cls-meta" style="color:#c62828;margin-top:4px"><b>⚠ '+a.warn+'</b></div>':'')
+      +'</div></div>';
+  }
   if(e.exam){
     return '<div class="cls '+(extra||'')+'" style="border-left-color:#c62828">'
       +'<div class="cls-time">'+e.start+'–'+e.end+'</div>'
@@ -164,17 +313,25 @@ function clsHTML(e,extra){
       +'<div class="cls-meta">Room TBD — check UPV Intranet</div></div></div>';
   }
   const c=COURSES[e.ci];
+  const rm=rmNote(e);
   return '<div class="cls '+(extra||'')+'" style="border-left-color:'+COLORS[e.ci]+'">'
     +'<div class="cls-time">'+e.start+'–'+e.end+'</div>'
     +'<div><div class="cls-name">'+tc(c[0])+'</div>'
-    +'<div class="cls-meta">'+c[2]+' · Edificio 7J'+(c[1]?' · '+c[1]:'')+'</div></div></div>';
+    +'<div class="cls-meta">'+c[2]+' · Edificio 7J'+(c[1]?' · '+c[1]:'')+'</div>'
+    +(rm?'<div class="cls-meta" style="margin-top:4px"><b>'+rm[1]+'</b>'+(rm[2]?'<br>'+rm[2]:'')+'</div>':'')
+    +(ntsNote(e)?'<div class="cls-meta" style="margin-top:4px">'+ntsHTML(ntsNote(e))+'</div>':'')
+    +(e.chg?'<div class="cls-meta" style="margin-top:4px;color:#b06000"><b>↔ '+e.chg+'</b></div>':'')
+    +'</div></div>';
 }
 
 const todays=combined.filter(e=>e.date===todayISO).sort((a,b)=>a.start.localeCompare(b.start));
 const tEl=document.getElementById('today-classes');
-if(!todays.length){tEl.innerHTML='<div class="none">No classes today.</div>';}
+const dueToday=dueOn(todayISO);
+tEl.innerHTML=dueToday.map(a=>'<div class="cls" style="border-left-color:#c62828;background:#fdeaea"><div class="cls-time">DUE</div><div><div class="cls-name">'+a.title+'</div><div class="cls-meta">'+a.course+' · '+a.mode+'</div></div></div>').join('')
+  +actionOn(todayISO).map(a=>'<div class="cls" style="border-left-color:#b06000;background:#fdf3e3"><div class="cls-time">TO&nbsp;DO</div><div><div class="cls-name">'+a.title+'</div><div class="cls-meta">'+a.course+'</div></div></div>').join('');
+if(!todays.length){tEl.innerHTML+='<div class="none">No classes today.</div>';}
 else{
-  tEl.innerHTML=todays.map(e=>{
+  tEl.innerHTML+=todays.map(e=>{
     let x='';
     if(e.end<=nowHM)x='past';
     else if(e.start<=nowHM&&nowHM<e.end)x='now';
@@ -185,8 +342,8 @@ const future=combined.filter(e=>e.date>todayISO).sort((a,b)=>(a.date+a.start).lo
 const nEl=document.getElementById('next-up');
 if(future.length){
   const n=future[0];const nd=new Date(n.date+'T00:00:00');
-  const label=n.exam?('<b style="color:#c62828">EXAM — '+n.exam+'</b>'):('<b>'+tc(COURSES[n.ci][0])+'</b>');
-  const loc=n.exam?'room TBD':COURSES[n.ci][2];
+  const label=n.appt?('<b style="color:#7c3aed">'+n.appt.title+'</b>'):n.exam?('<b style="color:#c62828">EXAM — '+n.exam+'</b>'):('<b>'+tc(COURSES[n.ci][0])+'</b>');
+  const loc=n.appt?n.appt.where:n.exam?'room TBD':COURSES[n.ci][2];
   nEl.innerHTML='Next: '+label+' — '+fmtLong(nd)+', '+n.start+'–'+n.end+' ('+loc+')';
   const nextExam=future.find(e=>e.exam);
   if(nextExam&&!future[0].exam){
@@ -206,9 +363,13 @@ for(let i=0;i<5;i++){
   if(evs.length)any=true;
   wh+='<div class="wk-day"><div class="wk-day-h'+(di===todayISO?' today':'')+'">'
     +d.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'short'})+(di===todayISO?' · today':'')+'</div>';
-  wh+=evs.length?evs.map(e=>e.exam
+  dueOn(di).forEach(a=>{any=true;wh+='<div class="pill" style="border-left-color:#c62828;background:#fdeaea"><b>DUE</b> '+a.title+'</div>';});
+  actionOn(di).forEach(a=>{any=true;wh+='<div class="pill" style="border-left-color:#b06000;background:#fdf3e3"><b>TO DO</b> '+a.title+'</div>';});
+  wh+=evs.length?evs.map(e=>e.appt
+    ?'<div class="pill" style="border-left-color:#7c3aed"><b>'+e.start+'</b> 📍 '+e.appt.title+'</div>'
+    :e.exam
     ?'<div class="pill" style="border-left-color:#c62828"><b>'+e.start+'–'+e.end+'</b> EXAM — '+e.exam+'</div>'
-    :'<div class="pill" style="border-left-color:'+COLORS[e.ci]+'"><b>'+e.start+'–'+e.end+'</b> '+tc(COURSES[e.ci][0])+'</div>').join(''):'<div class="none" style="font-size:.78rem">—</div>';
+    :'<div class="pill" style="border-left-color:'+COLORS[e.ci]+'"><b>'+e.start+'–'+e.end+'</b> '+(e.chg?'<span style="color:#b06000">↔ </span>':'')+tc(COURSES[e.ci][0])+(rmNote(e)?' <span class="kn">· '+rmNote(e)[1]+'</span>':'')+(ntsNote(e)?' <span class="kn">· '+ntsNote(e).unit+'</span>':'')+'</div>').join(''):'<div class="none" style="font-size:.78rem">—</div>';
   wh+='</div>';
 }
 document.getElementById('week-view').innerHTML=any?wh:'<div class="none">No classes this week (out of term).</div>';
@@ -236,6 +397,83 @@ document.getElementById('examlist').innerHTML=EXAMS.map(e=>{
   const past=e[0]<todayISO;
   return '<div class="keyrow'+(past?'" style="opacity:.45':'')+'"><span class="kd" style="color:#c62828">'+d.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric'})+'</span><span><b>'+e[1]+'–'+e[2]+'</b> · '+e[3]+'</span></div>';
 }).join('');
+
+document.getElementById('assignlist').innerHTML=ACTIONS.map(a=>{
+  const d=new Date(a.due+'T00:00:00');
+  const days=Math.round((d-new Date(todayISO+'T00:00:00'))/86400000);
+  const when=days>0?days+' days left':days===0?'LAST DAY':'overdue';
+  return '<div style="background:#fdf3e3;border-left:4px solid #b06000;border-radius:8px;padding:10px 12px;margin-bottom:12px'+(days<0?';opacity:.5':'')+'">'
+    +'<div style="font-weight:700;font-size:.95rem">✉️ '+a.title+'</div>'
+    +'<div class="kn" style="margin:2px 0 6px">'+a.course+' · by '+fmtLong(d)+' · <b style="color:#b06000">'+when+'</b></div>'
+    +'<div style="font-size:.83rem">'+a.detail+'</div>'
+    +(a.include?'<div style="font-size:.83rem;margin-top:6px;padding:6px 8px;background:#fff;border-radius:6px">'+a.include+'</div>':'')
+    +'<div style="font-size:.82rem;margin-top:6px">'+a.options+'</div>'
+    +'<p class="note">'+a.note+'</p></div>';
+}).join('')
++ASSIGNMENTS.map(a=>{
+  const hasDate=!!a.due;
+  const d=hasDate?new Date(a.due+'T00:00:00'):null;
+  const days=hasDate?Math.round((d-new Date(todayISO+'T00:00:00'))/86400000):null;
+  const when=!hasDate?'deadline to confirm':days>0?days+' days away':days===0?'DUE TODAY':Math.abs(days)+' days ago';
+  return '<div style="'+(hasDate&&days<0?'opacity:.45':'')+'">'
+    +'<div style="font-weight:700;font-size:.95rem">'+a.title+'</div>'
+    +'<div class="kn" style="margin:2px 0 8px">'+a.course+' · '+a.mode+' · '+(hasDate?'due '+fmtLong(d)+' · ':'')+'<b style="color:#c62828">'+when+'</b></div>'
+    +'<div style="font-size:.83rem;margin-bottom:8px">'+a.brief+'</div>'
+    +'<div style="font-size:.83rem"><b>Format:</b> '+a.format+'</div>'
+    +'<div style="font-size:.83rem;margin-bottom:8px"><b>Submit:</b> '+a.submit+'</div>'
+    +(a.parts.length?'<div style="font-size:.82rem"><b>Parts &amp; weighting:</b></div>':'')
+    +a.parts.map(p=>'<div class="keyrow" style="padding:5px 0"><span class="kd" style="min-width:42px;color:#c62828">'+p[1]+'</span><span style="font-size:.82rem"><b>'+p[0]+'</b><br><span class="kn">'+p[2]+'</span></span></div>').join('')
+    +(a.note?'<p class="note">'+a.note+'</p>':'')
+    +'</div>';
+}).join('<hr style="border:none;border-top:1px solid var(--border);margin:14px 0">');
+
+document.getElementById('changelist').innerHTML=CHANGE_LIST.map(c=>{
+
+  const d=new Date(c[0]+'T00:00:00');
+  const past=c[0]<todayISO;
+  return '<div class="keyrow"'+(past?' style="opacity:.45"':'')+'><span class="kd" style="color:#b06000">'+d.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'})+'</span>'
+    +'<span><b>'+c[1]+'</b> · '+c[2]+'<br><span class="kn">'+c[3]+'</span></span></div>';
+}).join('');
+if(CHANGE_LIST.every(c=>c[0]<todayISO)){document.getElementById('changes-card').style.opacity='.6';}
+
+document.getElementById('apptlist').innerHTML=APPTS.map(a=>{
+  const d=new Date(a.date+'T00:00:00');
+  const days=Math.round((d-new Date(todayISO+'T00:00:00'))/86400000);
+  const when=days>0?days+' days away':days===0?'TODAY':'past';
+  return '<div style="'+(days<0?'opacity:.45':'')+'">'
+    +'<div style="font-weight:700;font-size:.95rem">'+a.title+'</div>'
+    +'<div class="kn" style="margin:2px 0 6px">'+fmtLong(d)+(a.start&&a.start!=='—'?' · '+a.start:'')+' · <b>'+when+'</b></div>'
+    +'<div class="cls-meta">📍 '+a.where+'</div>'
+    +(a.warn?'<div class="cls-meta" style="color:#c62828;margin-top:6px"><b>⚠ '+a.warn+'</b></div>':'')
+    +'<div style="margin-top:8px;font-size:.82rem"><b>Bring:</b><ul style="margin:4px 0 0;padding-left:18px">'
+    +a.bring.map(b=>'<li style="margin-bottom:3px">'+b+'</li>').join('')+'</ul></div>'
+    +(a.note?'<p class="note">'+a.note+'</p>':'')
+    +'</div>';
+}).join('<hr style="border:none;border-top:1px solid var(--border);margin:14px 0">');
+
+let ntsH='';let lastW='';
+Object.keys(NTS_PLAN).sort().forEach(dt=>{
+  const p=NTS_PLAN[dt];
+  const d=new Date(dt+'T00:00:00');
+  const past=dt<todayISO, isToday=dt===todayISO;
+  if(p.w!==lastW){lastW=p.w;ntsH+='<div class="wk-day-h" style="margin-top:10px">'+p.w.toUpperCase()+'</div>';}
+  ntsH+='<div class="keyrow"'+(past?' style="opacity:.45"':'')+'><span class="kd"'+(isToday?' style="color:var(--accent)"':'')+'>'
+    +d.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'})+(isToday?' · today':'')+'</span>'
+    +'<span style="font-size:.83rem">'+ntsHTML(p)+'</span></div>';
+});
+document.getElementById('ntsplan').innerHTML=ntsH;
+
+const SEC={S1:'Section 1 — Literature review',S2:'Section 2 — Information and analysis',S3:'Section 3 — Final work'};
+let rmHtml='';let lastSec='';
+Object.keys(RM_PLAN).sort().forEach((dt,i)=>{
+  const r=RM_PLAN[dt];
+  if(r[0]!==lastSec){lastSec=r[0];rmHtml+='<div class="wk-day-h" style="margin-top:10px">'+SEC[r[0]]+'</div>';}
+  const d=new Date(dt+'T00:00:00');
+  const past=dt<todayISO;
+  const isToday=dt===todayISO;
+  rmHtml+='<div class="keyrow"'+(past?' style="opacity:.45"':'')+'><span class="kd"'+(isToday?' style="color:var(--accent)"':'')+'>'+(i+1)+'. '+d.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'})+'</span><span><b>'+r[1]+'</b>'+(r[2]?'<br><span class="kn">'+r[2]+'</span>':'')+'</span></div>';
+});
+document.getElementById('rmplan').innerHTML=rmHtml;
 
 const fc=document.getElementById('f-course'),fs=document.getElementById('f-sem'),fl=document.getElementById('full-list');
 COURSES.map((c,i)=>({i,n:tc(c[0])})).sort((a,b)=>a.n.localeCompare(b.n)).forEach(({i,n})=>{
