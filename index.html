@@ -211,6 +211,16 @@ const NTS_PLAN={
  "2026-11-30":{w:"w13",unit:"Tasks",cs:"",prof:"Blanca"}
 };
 function ntsNote(e){ return (COURSES[e.ci] && COURSES[e.ci][0]==='NEW TRENDS IN SERVICE STRATEGIES' && NTS_PLAN[e.date]) ? NTS_PLAN[e.date] : null; }
+// Per-session prep notes: date -> [{course, text}]
+const PREP={
+ "2026-10-02":[{course:"OPERATIONS MANAGEMENT",text:"Read the slides before class"}]
+};
+function prepFor(e){
+  const list=PREP[e.date];
+  if(!list||!COURSES[e.ci]) return null;
+  const hit=list.find(p=>p.course===COURSES[e.ci][0]);
+  return hit?hit.text:null;
+}
 // Graded deliverables with their own deadlines
 const ASSIGNMENTS=[
  {due:"2026-09-28",course:"Methods and Tools for Business Decision-Making",mode:"Online assessment",
@@ -320,6 +330,7 @@ function clsHTML(e,extra){
     +'<div class="cls-meta">'+c[2]+' · Edificio 7J'+(c[1]?' · '+c[1]:'')+'</div>'
     +(rm?'<div class="cls-meta" style="margin-top:4px"><b>'+rm[1]+'</b>'+(rm[2]?'<br>'+rm[2]:'')+'</div>':'')
     +(ntsNote(e)?'<div class="cls-meta" style="margin-top:4px">'+ntsHTML(ntsNote(e))+'</div>':'')
+    +(prepFor(e)?'<div class="cls-meta" style="margin-top:4px;color:#b06000"><b>📖 Before: '+prepFor(e)+'</b></div>':'')
     +(e.chg?'<div class="cls-meta" style="margin-top:4px;color:#b06000"><b>↔ '+e.chg+'</b></div>':'')
     +'</div></div>';
 }
@@ -369,7 +380,7 @@ for(let i=0;i<5;i++){
     ?'<div class="pill" style="border-left-color:#7c3aed"><b>'+e.start+'</b> 📍 '+e.appt.title+'</div>'
     :e.exam
     ?'<div class="pill" style="border-left-color:#c62828"><b>'+e.start+'–'+e.end+'</b> EXAM — '+e.exam+'</div>'
-    :'<div class="pill" style="border-left-color:'+COLORS[e.ci]+'"><b>'+e.start+'–'+e.end+'</b> '+(e.chg?'<span style="color:#b06000">↔ </span>':'')+tc(COURSES[e.ci][0])+(rmNote(e)?' <span class="kn">· '+rmNote(e)[1]+'</span>':'')+(ntsNote(e)?' <span class="kn">· '+ntsNote(e).unit+'</span>':'')+'</div>').join(''):'<div class="none" style="font-size:.78rem">—</div>';
+    :'<div class="pill" style="border-left-color:'+COLORS[e.ci]+'"><b>'+e.start+'–'+e.end+'</b> '+(e.chg?'<span style="color:#b06000">↔ </span>':'')+tc(COURSES[e.ci][0])+(rmNote(e)?' <span class="kn">· '+rmNote(e)[1]+'</span>':'')+(ntsNote(e)?' <span class="kn">· '+ntsNote(e).unit+'</span>':'')+(prepFor(e)?' <span style="color:#b06000">· 📖 '+prepFor(e)+'</span>':'')+'</div>').join(''):'<div class="none" style="font-size:.78rem">—</div>';
   wh+='</div>';
 }
 document.getElementById('week-view').innerHTML=any?wh:'<div class="none">No classes this week (out of term).</div>';
