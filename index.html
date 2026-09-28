@@ -223,8 +223,9 @@ function prepFor(e){
 }
 // Graded deliverables with their own deadlines
 const ASSIGNMENTS=[
- {due:"2026-09-28",course:"Methods and Tools for Business Decision-Making",mode:"Online assessment",
-  title:"“Session: Descriptive” assessment — due Mon 28 Sep, 23:50",
+ {due:"2026-09-28",done:"Submitted Mon 28 Sep, 14:24 · both attempts used (0 of 2 remaining)",
+  course:"Methods and Tools for Business Decision-Making",mode:"Online assessment",
+  title:"“Session: Descriptive” assessment",
   brief:"Exam on concepts from the <b>first part — statistics</b>. <b>No time limit</b>, and you get <b>2 attempts</b> — your highest score is recorded, but answers from the first attempt aren't visible during the second.",
   format:"Questions are <b>monitored by how long you take on each one</b>, and a question's text only appears once you press <b>Start</b> on it. Open only one assessment at a time.",
   submit:"PoliformaT → Methods and Tools → Tests &amp; Quizzes → “Session : Descriptive”. Tick the honour pledge, then Begin Assessment.",
@@ -262,7 +263,7 @@ const ACTIONS=[
   include:"<b>The email must state two things:</b> (1) the exposition <b>date/time</b> you're choosing, and (2) the <b>company</b> you've picked for Individual task 1 — remember it has to publish an annual report.",
   note:"Whichever date you book is when you present Individual task 1, so it may move that deadline off 14 Oct — update this page once it's confirmed."}
 ];
-function dueOn(date){ return ASSIGNMENTS.filter(a=>a.due===date); }
+function dueOn(date){ return ASSIGNMENTS.filter(a=>a.due===date && !a.done); }
 function actionOn(date){ return ACTIONS.filter(a=>a.due===date); }
 function ntsHTML(p){
   let h='<div'+(p.expo?' style="color:#c62828"':'')+'><b>'+p.unit+'</b>'+(p.cs?' · '+p.cs:'')+'</div>';
@@ -425,10 +426,10 @@ document.getElementById('assignlist').innerHTML=ACTIONS.map(a=>{
   const hasDate=!!a.due;
   const d=hasDate?new Date(a.due+'T00:00:00'):null;
   const days=hasDate?Math.round((d-new Date(todayISO+'T00:00:00'))/86400000):null;
-  const when=!hasDate?'deadline to confirm':days>0?days+' days away':days===0?'DUE TODAY':Math.abs(days)+' days ago';
-  return '<div style="'+(hasDate&&days<0?'opacity:.45':'')+'">'
-    +'<div style="font-weight:700;font-size:.95rem">'+a.title+'</div>'
-    +'<div class="kn" style="margin:2px 0 8px">'+a.course+' · '+a.mode+' · '+(hasDate?'due '+fmtLong(d)+' · ':'')+'<b style="color:#c62828">'+when+'</b></div>'
+  const when=a.done?'DONE':!hasDate?'deadline to confirm':days>0?days+' days away':days===0?'DUE TODAY':Math.abs(days)+' days ago';
+  return '<div style="'+(a.done?'opacity:.5':hasDate&&days<0?'opacity:.45':'')+'">'
+    +'<div style="font-weight:700;font-size:.95rem">'+(a.done?'✅ ':'')+a.title+'</div>'
+    +'<div class="kn" style="margin:2px 0 8px">'+a.course+' · '+a.mode+' · '+(a.done?'<b style="color:#2e7d32">'+a.done+'</b>':(hasDate?'due '+fmtLong(d)+' · ':'')+'<b style="color:#c62828">'+when+'</b>')+'</div>'
     +'<div style="font-size:.83rem;margin-bottom:8px">'+a.brief+'</div>'
     +'<div style="font-size:.83rem"><b>Format:</b> '+a.format+'</div>'
     +'<div style="font-size:.83rem;margin-bottom:8px"><b>Submit:</b> '+a.submit+'</div>'
