@@ -197,16 +197,16 @@ const NTS_PLAN={
  "2026-10-07":{w:"w5",unit:"T6. Strategic change",cs:"Case 6",prof:"Blanca"},
  "2026-10-14":{w:"w6",unit:"EXPOSITIONS (Competitive advantage)",cs:"",prof:"Blanca",expo:true},
  "2026-10-19":{w:"w7",unit:"EXPOSITIONS (BMs)",cs:"",prof:"Blanca",expo:true},
- "2026-10-21":{w:"w7",unit:"EXPOSITIONS (BMs of platforms and ecosystems)",cs:"",prof:"Blanca",expo:true},
+ "2026-10-21":{w:"w7",unit:"EXPOSITIONS — <b style=\"color:#c62828\">⭐ YOUR PRESENTATION</b> (Competitive advantage). Also presenting: Natalia Vargas (BMs), Maria Ines Lonzoy (BMs).",cs:"",prof:"Blanca",expo:true,mine:true},
  "2026-10-26":{w:"w8",unit:"T7. Blue Ocean Strategy",cs:"Case 7",prof:"Blanca"},
  "2026-10-28":{w:"w8",unit:"T7. Blue Ocean Strategy",cs:"Case 7",prof:"Blanca"},
  "2026-11-02":{w:"w9",unit:"EXPOSITIONS (Strategic change)",cs:"",prof:"Blanca",expo:true},
- "2026-11-04":{w:"w9",unit:"EXPOSITIONS (BOS)",cs:"",prof:"Blanca",expo:true},
- "2026-11-09":{w:"w10",unit:"T8. Corporate strategy",cs:"Case 8",prof:"Blanca"},
+ "2026-11-04":{w:"w9",unit:"🎨 OUTDOOR TASK — Centro de Arte Hortensia Herrero",cs:"",prof:"Blanca",outdoor:true},
+ "2026-11-09":{w:"w10",unit:"EXPOSITIONS (BOS)",cs:"",prof:"Blanca",expo:true},
  "2026-11-11":{w:"w10",unit:"T8. Corporate strategy",cs:"Case 8",prof:"Blanca"},
  "2026-11-16":{w:"w11",unit:"T9. Sustainability &amp; CSR",cs:"Case 9",prof:"Barbara"},
- "2026-11-18":{w:"w11",unit:"T9. Sustainability &amp; CSR",cs:"Case 9",prof:"Barbara"},
- "2026-11-23":{w:"w12",unit:"T8. Corporate strategy <span class=\"kn\">(listed as T8 again — possibly a typo)</span>",cs:"Case 10",prof:"Blanca"},
+ "2026-11-18":{w:"w11",unit:"T9. Sustainability &amp; CSR / T8. Corporate strategy",cs:"Case 9 / Case 10",prof:"Barbara"},
+ "2026-11-23":{w:"w12",unit:"T8. Corporate strategy",cs:"Case 10",prof:"Blanca"},
  "2026-11-25":{w:"w12",unit:"EXPOSITIONS (Corporate strategy; Sustainability &amp; CSR)",cs:"",prof:"Blanca",expo:true},
  "2026-11-30":{w:"w13",unit:"Tasks",cs:"",prof:"Blanca"}
 };
@@ -238,8 +238,8 @@ const ASSIGNMENTS=[
   submit:"Bring the questions to the Tuesday session — no upload mentioned. Interview deadline not set yet.",
   parts:[],
   note:"Gestión Participativa · Prof. Juan Antonio Marín García · Tuesdays 17:20–21:30, Seminario 4.3. Plan the recruiting early — five one-hour interviews is the slow part, not the writing."},
- {due:"2026-10-14",course:"New Trends in Service Strategies",mode:"Individual",
-  title:"Individual task 1 — Competitive advantage (oral presentation)",
+ {due:"2026-10-21",course:"New Trends in Service Strategies",mode:"Individual",
+  title:"Individual task 1 — Competitive advantage · <span style=\"color:#c62828\">YOU PRESENT Wed 21 Oct</span> · company: <b>Careem</b>",
   brief:"Pick a company <b>not</b> among those used in the class cases. Your role is a strategic consultant hired by that company. Objective: evaluate whether it has a <b>sustainable competitive advantage</b> and whether its current strategy suits future competition. Applies concepts from Units 2 &amp; 3. Choose a firm with enough public information on its website — big companies usually publish more, but pick one you're actually interested in.<br><span style=\"color:#c62828\"><b>⚠ Professor's requirement: the company must publish an annual report.</b> Check that one exists (and ideally the most recent year) before committing to your choice — listed companies and large groups normally have an \"Investors\" or \"Investor relations\" page.</span>",
   format:"Slides — max <b>10 slides</b>, not counting title, index and references slides.",
   submit:"Export the PPT to <b>PDF</b> and upload to PoliformaT → \"Task\" folder → task named <i>\"Individual task 1. Competitive advantage\"</i>.",
@@ -252,11 +252,11 @@ const ASSIGNMENTS=[
    ["6. Competitor challenge","15%","Pick its biggest competitor and compare competitive positioning, resources and capabilities. Who is better positioned for the future, and why?"],
    ["7. Strategic recommendation","10%","Propose one major initiative (new market, ecosystem strategy, AI as a strategic capability, acquisition, alliances, repositioning the service offer) with expected benefits, risks and resources required."]
   ],
-  note:"The brief says to confirm the exact deadline in PoliformaT → Lessons → Course organisation. Oct 14 is also the EXPOSITIONS (Competitive advantage) session, so plan to present that evening."}
+  note:"Confirmed on the official oral-presentation schedule: you present <b>Wed 21 Oct</b> on <b>Competitive advantage</b>, alongside Natalia Vargas and Maria Ines Lonzoy (both BMs) — max 5 students per day. Your company is <b>Careem</b>. ⚠ Check whether the PDF must be uploaded to PoliformaT <i>before</i> 21 Oct rather than on the day (PoliformaT → Lessons → Course organisation). Note 21 Oct is also the day your TIE card should be ready to collect."}
 ];
 // Admin action items with their own deadlines
 const ACTIONS=[
- {due:"2026-10-06",course:"New Trends in Service Strategies",
+ {done:true,due:"2026-10-06",course:"New Trends in Service Strategies",
   title:"Email to choose your exposition date",
   detail:"Must be sent <b>before Wednesday 7 October</b> — so <b>Tuesday 6 Oct</b> is the last safe day. Your previous New Trends session is Mon 5 Oct, a good moment to confirm the options in person.",
   options:"Exposition sessions on the course plan: <b>Wed 14 Oct</b> (Competitive advantage) · <b>Mon 19 Oct</b> (BMs) · <b>Wed 21 Oct</b> (BMs of platforms &amp; ecosystems) · <b>Mon 2 Nov</b> (Strategic change) · <b>Wed 4 Nov</b> (BOS) · <b>Wed 25 Nov</b> (Corporate strategy; Sustainability &amp; CSR).",
@@ -266,7 +266,7 @@ const ACTIONS=[
 function dueOn(date){ return ASSIGNMENTS.filter(a=>a.due===date && !a.done); }
 function actionOn(date){ return ACTIONS.filter(a=>a.due===date); }
 function ntsHTML(p){
-  let h='<div'+(p.expo?' style="color:#c62828"':'')+'><b>'+p.unit+'</b>'+(p.cs?' · '+p.cs:'')+'</div>';
+  let h='<div'+(p.expo?' style="color:#c62828"':p.outdoor?' style="color:#1565c0"':'')+'><b>'+p.unit+'</b>'+(p.cs?' · '+p.cs:'')+'</div>';
   if(p.prof==='Barbara') h+='<div style="color:#7c3aed"><b>Taught by Barbara</b> (not Blanca)</div>';
   if(p.before&&p.before.length) h+='<div style="color:#b06000"><b>Before:</b> '+p.before.join(' · ')+'</div>';
   if(p.during&&p.during.length) h+='<div><b>In class:</b> '+p.during.join(' · ')+'</div>';
@@ -413,7 +413,10 @@ document.getElementById('examlist').innerHTML=EXAMS.map(e=>{
 document.getElementById('assignlist').innerHTML=ACTIONS.map(a=>{
   const d=new Date(a.due+'T00:00:00');
   const days=Math.round((d-new Date(todayISO+'T00:00:00'))/86400000);
-  const when=days>0?days+' days left':days===0?'LAST DAY':'overdue';
+  const when=a.done?'DONE — slot confirmed: Wed 21 Oct':days>0?days+' days left':days===0?'LAST DAY':'overdue';
+  if(a.done) return '<div style="background:#eef7ee;border-left:4px solid #2e7d32;border-radius:8px;padding:10px 12px;margin-bottom:12px;opacity:.6">'
+    +'<div style="font-weight:700;font-size:.95rem">✅ '+a.title+'</div>'
+    +'<div class="kn" style="margin:2px 0 0">'+a.course+' · <b style="color:#2e7d32">'+when+'</b></div></div>';
   return '<div style="background:#fdf3e3;border-left:4px solid #b06000;border-radius:8px;padding:10px 12px;margin-bottom:12px'+(days<0?';opacity:.5':'')+'">'
     +'<div style="font-weight:700;font-size:.95rem">✉️ '+a.title+'</div>'
     +'<div class="kn" style="margin:2px 0 6px">'+a.course+' · by '+fmtLong(d)+' · <b style="color:#b06000">'+when+'</b></div>'
@@ -457,8 +460,8 @@ document.getElementById('apptlist').innerHTML=APPTS.map(a=>{
     +'<div class="kn" style="margin:2px 0 6px">'+fmtLong(d)+(a.start&&a.start!=='—'?' · '+a.start:'')+' · <b>'+when+'</b></div>'
     +'<div class="cls-meta">📍 '+a.where+'</div>'
     +(a.warn?'<div class="cls-meta" style="color:#c62828;margin-top:6px"><b>⚠ '+a.warn+'</b></div>':'')
-    +'<div style="margin-top:8px;font-size:.82rem"><b>Bring:</b><ul style="margin:4px 0 0;padding-left:18px">'
-    +a.bring.map(b=>'<li style="margin-bottom:3px">'+b+'</li>').join('')+'</ul></div>'
+    +(a.bring.length?'<div style="margin-top:8px;font-size:.82rem"><b>Bring:</b><ul style="margin:4px 0 0;padding-left:18px">'
+    +a.bring.map(b=>'<li style="margin-bottom:3px">'+b+'</li>').join('')+'</ul></div>':'')
     +(a.note?'<p class="note">'+a.note+'</p>':'')
     +'</div>';
 }).join('<hr style="border:none;border-top:1px solid var(--border);margin:14px 0">');
