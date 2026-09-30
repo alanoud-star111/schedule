@@ -284,11 +284,15 @@ const apptEvs=APPTS.map(a=>({date:a.date,start:a.start,end:a.start,appt:a}));
 // One-off swaps announced by email. Key: date|start. ci = replacement course index.
 const CHANGES={
  "2026-09-17|17:30":{ci:5,note:"Swapped this week — special seminar <b>“Personal Branding”</b> by Prof. Efendi Haslim (Atma Jaya University, Indonesia). Takes the Methods &amp; Tools slot."},
- "2026-09-18|15:00":{ci:4,note:"Swapped this week — moved here from Thursday, in place of Operations Management."}
+ "2026-09-18|15:00":{ci:4,note:"Swapped this week — moved here from Thursday, in place of Operations Management."},
+ "2026-10-05|15:00":{cancel:true,note:"CANCELLED this week."},
+ "2026-10-05|17:50":{start:"16:00",end:"18:00",note:"Moved earlier to <b>16:00</b> this week, into the cancelled Technological Entrepreneurship slot. End time not confirmed — shown as a normal 2-hour session."}
 };
 const CHANGE_LIST=[
  ["2026-09-17","17:30–20:00","Operations Management — special seminar “Personal Branding”","Prof. Efendi Haslim, Atma Jaya University (Indonesia). Replaces the usual Methods &amp; Tools slot. Announced by Ángel Peiró Signes &amp; Óscar Trull Domínguez."],
- ["2026-09-18","15:00–17:30","Methods and Tools for Business Decision-Making","Moved from its usual Thursday slot; takes the Operations Management Friday slot this week."]
+ ["2026-09-18","15:00–17:30","Methods and Tools for Business Decision-Making","Moved from its usual Thursday slot; takes the Operations Management Friday slot this week."],
+ ["2026-10-05","15:00–17:30","✕ Technological Entrepreneurship — CANCELLED","No class this Monday."],
+ ["2026-10-05","16:00","New Trends in Service Strategies — moved earlier","Starts at 16:00 instead of 17:50, taking the cancelled Technological Entrepreneurship slot. End time not confirmed — shown as a 2-hour session (16:00–18:00). Unit that day: T5. Business models (II), platforms and ecosystems · Case 5."]
 ];
 
 function tc(s){return s.toLowerCase().split(' ').map(w=>w.length>2?w[0].toUpperCase()+w.slice(1):w).join(' ');}
@@ -297,7 +301,10 @@ function iso(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate
 function fmtLong(d){return d.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});}
 function evObjs(){return EVENTS.map(e=>{
   const c=CHANGES[e[0]+'|'+e[1]];
-  return {date:e[0],start:e[1],end:e[2],ci:c?c.ci:e[3],chg:c?c.note:null};
+  const o={date:e[0],start:e[1],end:e[2],ci:(c&&c.ci!==undefined)?c.ci:e[3],chg:c?c.note:null};
+  if(c&&c.cancel) o.cancelled=true;
+  if(c&&c.start){ o.start=c.start; o.end=c.end||e[2]; }
+  return o;
 });}
 
 const now=new Date();
@@ -325,6 +332,12 @@ function clsHTML(e,extra){
   }
   const c=COURSES[e.ci];
   const rm=rmNote(e);
+  if(e.cancelled){
+    return '<div class="cls" style="border-left-color:#999;opacity:.5">'
+      +'<div class="cls-time" style="text-decoration:line-through">'+e.start+'–'+e.end+'</div>'
+      +'<div><div class="cls-name" style="text-decoration:line-through">'+tc(c[0])+'</div>'
+      +'<div class="cls-meta"><b style="color:#c62828">✕ '+(e.chg||'Cancelled')+'</b></div></div></div>';
+  }
   return '<div class="cls '+(extra||'')+'" style="border-left-color:'+COLORS[e.ci]+'">'
     +'<div class="cls-time">'+e.start+'–'+e.end+'</div>'
     +'<div><div class="cls-name">'+tc(c[0])+'</div>'
@@ -381,6 +394,8 @@ for(let i=0;i<5;i++){
     ?'<div class="pill" style="border-left-color:#7c3aed"><b>'+e.start+'</b> 📍 '+e.appt.title+'</div>'
     :e.exam
     ?'<div class="pill" style="border-left-color:#c62828"><b>'+e.start+'–'+e.end+'</b> EXAM — '+e.exam+'</div>'
+    :e.cancelled
+    ?'<div class="pill" style="border-left-color:#999;opacity:.5"><b style="text-decoration:line-through">'+e.start+'–'+e.end+'</b> <span style="text-decoration:line-through">'+tc(COURSES[e.ci][0])+'</span> <b style="color:#c62828">✕ cancelled</b></div>'
     :'<div class="pill" style="border-left-color:'+COLORS[e.ci]+'"><b>'+e.start+'–'+e.end+'</b> '+(e.chg?'<span style="color:#b06000">↔ </span>':'')+tc(COURSES[e.ci][0])+(rmNote(e)?' <span class="kn">· '+rmNote(e)[1]+'</span>':'')+(ntsNote(e)?' <span class="kn">· '+ntsNote(e).unit+'</span>':'')+(prepFor(e)?' <span style="color:#b06000">· 📖 '+prepFor(e)+'</span>':'')+'</div>').join(''):'<div class="none" style="font-size:.78rem">—</div>';
   wh+='</div>';
 }
