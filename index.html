@@ -213,7 +213,8 @@ const NTS_PLAN={
 function ntsNote(e){ return (COURSES[e.ci] && COURSES[e.ci][0]==='NEW TRENDS IN SERVICE STRATEGIES' && NTS_PLAN[e.date]) ? NTS_PLAN[e.date] : null; }
 // Per-session prep notes: date -> [{course, text}]
 const PREP={
- "2026-10-02":[{course:"OPERATIONS MANAGEMENT",text:"Read the slides before class"}]
+ "2026-10-02":[{course:"OPERATIONS MANAGEMENT",text:"Read the slides before class"}],
+ "2026-10-15":[{course:"OPERATIONS MANAGEMENT",text:"Prepare both cases in advance: <b>Dell</b> (Business Models) · <b>Quality Crusader</b> (Quality Management)"}]
 };
 function prepFor(e){
   const list=PREP[e.date];
@@ -231,6 +232,13 @@ const ASSIGNMENTS=[
   submit:"PoliformaT → Methods and Tools → Tests &amp; Quizzes → “Session : Descriptive”. Tick the honour pledge, then Begin Assessment.",
   parts:[],
   note:"⚠ Two dates on the page: <b>due Mon 28 Sep 23:50</b>, but anything saved and unsubmitted is <b>auto-submitted Wed 30 Sep 23:50</b>. Treat 28 Sep as the real deadline — the later date is a safety net, not an extension. You're in class Mon 15:00–19:50, so finish it before then or leave the evening free."},
+ {due:"2026-10-08",course:"Methods and Tools for Business Decision-Making",mode:"Online assessment",
+  title:"“Session: Control Chart” assessment · due Thu 8 Oct, 19:17",
+  brief:"Exam on the <b>control charts</b> session. <b>No time limit.</b>",
+  format:"Questions are <b>monitored by how long you take on each one</b>, and a question's text only appears once you press <b>Start</b> on it.",
+  submit:"PoliformaT → Methods and Tools → Tests &amp; Quizzes → “Session : Control Chart” → Begin Assessment.",
+  parts:[],
+  note:"⚠ Due <b>Thu 8 Oct at 19:17</b> — that's <i>during</i> your Methods &amp; Tools class (17:30–20:00), so finish it before class starts. Your Conveyor Loop report (X-bar and R chart limits) is good revision."},
  {due:"2026-09-29",course:"Participative Management &amp; Teamwork",mode:"Individual fieldwork",
   title:"Draft your interview questions (bring to class)",
   brief:"<b>Step 1 — due next class:</b> come with a set of questions prepared. <br><b>Step 2 — later:</b> find <b>5 people who have worked recently</b> and interview each for about <b>one hour</b> about the business processes they carried out in their job — how work actually got done, who was involved, how it was measured. Example probe: <i>“in your company, are there quality figures / indicators?”</i>",
@@ -286,13 +294,24 @@ const CHANGES={
  "2026-09-17|17:30":{ci:5,note:"Swapped this week — special seminar <b>“Personal Branding”</b> by Prof. Efendi Haslim (Atma Jaya University, Indonesia). Takes the Methods &amp; Tools slot."},
  "2026-09-18|15:00":{ci:4,note:"Swapped this week — moved here from Thursday, in place of Operations Management."},
  "2026-10-05|15:00":{cancel:true,note:"CANCELLED this week."},
+ "2026-10-15|17:30":{ci:5,note:"Operations Management this week instead of Methods &amp; Tools — exchanged for the cancelled Fri 30 Oct OM session. <b>No Methods session this week.</b>"},
+ "2026-10-30|15:00":{cancel:true,note:"No session — exchanged for Thu 15 Oct."},
+ "2026-11-06|15:00":{cancel:true,note:"No afternoon class — outdoor activity in the morning instead."},
+ "2026-11-26|17:30":{ci:5,note:"Operations Management this week instead of Methods &amp; Tools."},
+ "2026-11-27|15:00":{ci:4,note:"Methods and Tools this week instead of Operations Management."},
  "2026-10-05|17:50":{start:"16:00",end:"18:00",note:"Moved earlier to <b>16:00</b> this week, into the cancelled Technological Entrepreneurship slot. End time not confirmed — shown as a normal 2-hour session."}
 };
 const CHANGE_LIST=[
  ["2026-09-17","17:30–20:00","Operations Management — special seminar “Personal Branding”","Prof. Efendi Haslim, Atma Jaya University (Indonesia). Replaces the usual Methods &amp; Tools slot. Announced by Ángel Peiró Signes &amp; Óscar Trull Domínguez."],
  ["2026-09-18","15:00–17:30","Methods and Tools for Business Decision-Making","Moved from its usual Thursday slot; takes the Operations Management Friday slot this week."],
  ["2026-10-05","15:00–17:30","✕ Technological Entrepreneurship — CANCELLED","No class this Monday."],
- ["2026-10-05","16:00","New Trends in Service Strategies — moved earlier","Starts at 16:00 instead of 17:50, taking the cancelled Technological Entrepreneurship slot. End time not confirmed — shown as a 2-hour session (16:00–18:00). Unit that day: T5. Business models (II), platforms and ecosystems · Case 5."]
+ ["2026-10-05","16:00","New Trends in Service Strategies — moved earlier","Starts at 16:00 instead of 17:50, taking the cancelled Technological Entrepreneurship slot. End time not confirmed — shown as a 2-hour session (16:00–18:00). Unit that day: T5. Business models (II), platforms and ecosystems · Case 5."],
+ ["2026-10-09","—","No Operations Management — regional public holiday","Día de la Comunitat Valenciana. Already reflected: you had no class scheduled that Friday."],
+ ["2026-10-15","17:30–20:00","Operations Management replaces Methods and Tools","Exchanged for the cancelled Fri 30 Oct OM session; <b>no Methods session that week</b>. Prepare both cases in advance: Dell (Business Models) and Quality Crusader (Quality Management). Long day — Knowledge Transfer 09:00–14:00 and Senior Management 15:00–17:10 come first."],
+ ["2026-10-30","15:00–17:30","✕ Operations Management — NO SESSION","Exchanged for Thu 15 Oct. Knowledge Transfer still runs 09:00–14:00 that morning."],
+ ["2026-11-06","15:00–17:30","✕ Operations Management — NO SESSION","Outdoor activity in the morning instead; no afternoon class. Morning time not stated in the email."],
+ ["2026-11-26","17:30–20:00","Operations Management replaces Methods and Tools","Timetable change for the week of 23–27 November."],
+ ["2026-11-27","15:00–17:30","Methods and Tools replaces Operations Management","Same week swap. Knowledge Transfer still runs 09:00–14:00 that morning."]
 ];
 
 function tc(s){return s.toLowerCase().split(' ').map(w=>w.length>2?w[0].toUpperCase()+w.slice(1):w).join(' ');}
