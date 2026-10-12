@@ -226,6 +226,13 @@ function prepFor(e){
 }
 // Graded deliverables with their own deadlines
 const ASSIGNMENTS=[
+ {due:"2026-11-15",course:"Participative Management &amp; Teamwork",mode:"Online assessment",
+  title:"“Examen 01” and “Examen 02” · due Sun 15 Nov, 23:57",
+  brief:"Two assessments open in PoliformaT now. <b>No time limit</b> on either. Not submitted yet.",
+  format:"What they cover, how many attempts you get, and whether they count toward the grade is <b>not stated</b>. Ask Prof. Marín García.",
+  submit:"PoliformaT → Gestión Participativa → Tests &amp; Quizzes → “-Examen 01” / “-Examen 02”.",
+  parts:[],
+  note:"Due 15 Nov is a <b>Sunday</b>, so the last class before it is Tue 10 Nov. Ask in class on Tue 13 Oct first."},
  {due:"2026-09-28",done:"Submitted Mon 28 Sep, 14:24 · both attempts used (0 of 2 remaining)",
   course:"Methods and Tools for Business Decision-Making",mode:"Online assessment",
   title:"“Session: Descriptive” assessment",
@@ -241,13 +248,34 @@ const ASSIGNMENTS=[
   submit:"PoliformaT → Research Methodologies → task “Assignment 6 Protocol”.",
   parts:[],
   note:"⚠ Deadline <b>15:00 CEST</b> is exactly when the Research Methodologies class starts (15:00–17:30), so upload before you leave. Deck drafted (“Subscription Fatigue Review Protocol”). Still open: your name on slide 1, the real VOSviewer screenshot for slide 6, and Page et al. / van Eck &amp; Waltman are listed in the references but no longer cited on a slide."},
- {due:"2026-10-08",course:"Methods and Tools for Business Decision-Making",mode:"Online assessment",
-  title:"“Session: Control Chart” assessment · due Thu 8 Oct, 19:17",
+ {due:"2026-10-08",late:true,course:"Methods and Tools for Business Decision-Making",mode:"Online assessment",
+  title:"“Session: Control Chart” assessment · <span style=\"color:#c62828\">LATE — was due Thu 8 Oct, 19:17</span>",
   brief:"Exam on the <b>control charts</b> session. <b>No time limit.</b>",
   format:"Questions are <b>monitored by how long you take on each one</b>, and a question's text only appears once you press <b>Start</b> on it.",
   submit:"PoliformaT → Methods and Tools → Tests &amp; Quizzes → “Session : Control Chart” → Begin Assessment.",
   parts:[],
-  note:"⚠ Due <b>Thu 8 Oct at 19:17</b> — that's <i>during</i> your Methods &amp; Tools class (17:30–20:00), so finish it before class starts. Your Conveyor Loop report (X-bar and R chart limits) is good revision."},
+  note:"⚠ <b>Overdue.</b> The deadline was Thu 8 Oct at 19:17, but on Mon 12 Oct PoliformaT still listed it as available (marked “late”). Do it as soon as possible — it isn't stated whether a late submission still counts, so it's worth asking Prof. Trull. Once submitted, mark it done here. Your Conveyor Loop report (X-bar and R chart limits) is good revision."},
+ {due:"2026-10-15",course:"Methods and Tools for Business Decision-Making",mode:"Online assessment",
+  title:"“Session: ANOVA and REGRESSION” assessment · due Thu 15 Oct, 23:55",
+  brief:"Exam on the <b>ANOVA and regression</b> session. <b>No time limit</b> (per the PoliformaT list).",
+  format:"Number of attempts and monitoring rules not checked yet — read the Begin Assessment page before you start. The earlier Methods &amp; Tools assessments timed each question once you pressed <b>Start</b>.",
+  submit:"PoliformaT → Methods and Tools → Tests &amp; Quizzes → “Session : ANOVA and REGRESSION” → Begin Assessment.",
+  parts:[],
+  note:"Due the same night as the Capability assessment. Thursday 15 Oct is a long day — Knowledge Transfer 09:00–14:00, Senior Management 15:00–17:10, Operations Management 17:30–20:00 — so aim to finish both by <b>Wed 14 Oct</b>."},
+ {due:"2026-10-15",course:"Methods and Tools for Business Decision-Making",mode:"Online assessment",
+  title:"“Session: Capability” assessment · due Thu 15 Oct, 23:55",
+  brief:"Exam on the <b>process capability</b> session. <b>No time limit</b> (per the PoliformaT list).",
+  format:"Number of attempts and monitoring rules not checked yet — read the Begin Assessment page before you start.",
+  submit:"PoliformaT → Methods and Tools → Tests &amp; Quizzes → “Session : Capability” → Begin Assessment.",
+  parts:[],
+  note:"Due the same night as ANOVA and REGRESSION, after a full day of classes (09:00–20:00) — aim to finish by <b>Wed 14 Oct</b>."},
+ {due:"2026-10-19",course:"Methods and Tools for Business Decision-Making",mode:"Online assessment",
+  title:"“Session: Probability” assessment · due Mon 19 Oct, 23:55",
+  brief:"Exam on the <b>probability</b> session. <b>No time limit</b> (per the PoliformaT list).",
+  format:"Number of attempts and monitoring rules not checked yet — read the Begin Assessment page before you start.",
+  submit:"PoliformaT → Methods and Tools → Tests &amp; Quizzes → “Session : Probability” → Begin Assessment.",
+  parts:[],
+  note:"Monday 19 Oct has classes 15:00–19:50 (Technological Entrepreneurship, then New Trends), so the weekend is the easiest time to do it."},
  {due:"2026-09-29",course:"Participative Management &amp; Teamwork",mode:"Individual fieldwork",
   title:"Draft your interview questions (bring to class)",
   brief:"<b>Step 1 — due next class:</b> come with a set of questions prepared. <br><b>Step 2 — later:</b> find <b>5 people who have worked recently</b> and interview each for about <b>one hour</b> about the business processes they carried out in their job — how work actually got done, who was involved, how it was measured. Example probe: <i>“in your company, are there quality figures / indicators?”</i>",
@@ -280,6 +308,11 @@ const ASSIGNMENTS=[
 ];
 // Admin action items with their own deadlines
 const ACTIONS=[
+ {due:"2026-10-13",course:"Participative Management &amp; Teamwork",
+  title:"Ask Prof. Marín García about Examen 01 and 02",
+  detail:"Both are open in PoliformaT (due <b>Sun 15 Nov, 23:57</b>, no time limit).",
+  include:"<b>Ask:</b> what each one covers, whether they count toward the grade (and how much), how many attempts you get, and whether to take them now or after certain sessions.",
+  note:"Class Tue 13 Oct, 17:20–21:30, Seminario 4.3."},
  {done:true,due:"2026-10-06",course:"New Trends in Service Strategies",
   title:"Email to choose your exposition date",
   detail:"Must be sent <b>before Wednesday 7 October</b> — so <b>Tuesday 6 Oct</b> is the last safe day. Your previous New Trends session is Mon 5 Oct, a good moment to confirm the options in person.",
@@ -484,8 +517,8 @@ document.getElementById('assignlist').innerHTML=ACTIONS.map(a=>{
   const hasDate=!!a.due;
   const d=hasDate?new Date(a.due+'T00:00:00'):null;
   const days=hasDate?Math.round((d-new Date(todayISO+'T00:00:00'))/86400000):null;
-  const when=a.done?'DONE':!hasDate?'deadline to confirm':days>0?days+' days away':days===0?'DUE TODAY':Math.abs(days)+' days ago';
-  return '<div style="'+(a.done?'opacity:.5':hasDate&&days<0?'opacity:.45':'')+'">'
+  const when=a.done?'DONE':!hasDate?'deadline to confirm':days>0?days+' days away':days===0?'DUE TODAY':a.late?'OVERDUE ('+Math.abs(days)+' days) — still open':Math.abs(days)+' days ago';
+  return '<div style="'+(a.done?'opacity:.5':hasDate&&days<0&&!a.late?'opacity:.45':'')+'">'
     +'<div style="font-weight:700;font-size:.95rem">'+(a.done?'✅ ':'')+a.title+'</div>'
     +'<div class="kn" style="margin:2px 0 8px">'+a.course+' · '+a.mode+' · '+(a.done?'<b style="color:#2e7d32">'+a.done+'</b>':(hasDate?'due '+fmtLong(d)+' · ':'')+'<b style="color:#c62828">'+when+'</b>')+'</div>'
     +'<div style="font-size:.83rem;margin-bottom:8px">'+a.brief+'</div>'
