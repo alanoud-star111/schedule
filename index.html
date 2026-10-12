@@ -302,7 +302,11 @@ const APPTS=[
  {date:"2026-10-21",start:"—",title:"Collect your TIE card",
   where:"Carrer dels Gremis 6, Valencia 46014 (same police station)",
   bring:["Passport","The resguardo / receipt they gave you at the appointment on 21 Sep"],
-  note:"Appointment completed 21 Sep 2026; cards are typically ready about 30 days later. Confirm the collection procedure — some stations require a separate cita previa to pick up, others accept walk-ins during set hours."}
+  note:"Appointment completed 21 Sep 2026; cards are typically ready about 30 days later. Confirm the collection procedure — some stations require a separate cita previa to pick up, others accept walk-ins during set hours."},
+ {date:"2026-10-22",start:"—",title:"Technological Entrepreneurship — visit to VDS",
+  where:"VDS — location not stated",
+  bring:[],
+  note:"Make-up for the cancelled Mon 5 Oct class (announced by Prof. Gabriela Ribes). <b>Time and meeting point not stated</b> — confirm with her. ⚠ Thursday already has Senior Management 15:00–17:10 and Methods &amp; Tools 17:30–20:00; check whether the visit clashes."}
 ];
 const apptEvs=APPTS.map(a=>({date:a.date,start:a.start,end:a.start,appt:a}));
 // One-off swaps announced by email. Key: date|start. ci = replacement course index.
@@ -320,10 +324,11 @@ const CHANGES={
 const CHANGE_LIST=[
  ["2026-09-17","17:30–20:00","Operations Management — special seminar “Personal Branding”","Prof. Efendi Haslim, Atma Jaya University (Indonesia). Replaces the usual Methods &amp; Tools slot. Announced by Ángel Peiró Signes &amp; Óscar Trull Domínguez."],
  ["2026-09-18","15:00–17:30","Methods and Tools for Business Decision-Making","Moved from its usual Thursday slot; takes the Operations Management Friday slot this week."],
- ["2026-10-05","15:00–17:30","✕ Technological Entrepreneurship — CANCELLED","No class this Monday."],
+ ["2026-10-05","15:00–17:30","✕ Technological Entrepreneurship — CANCELLED","No class this Monday. Made up on Thu 22 Oct with a visit to VDS. No class Mon 12 Oct (holiday); regular classes resume Mon 19 Oct."],
  ["2026-10-05","16:00","New Trends in Service Strategies — moved earlier","Starts at 16:00 instead of 17:50, taking the cancelled Technological Entrepreneurship slot. End time not confirmed — shown as a 2-hour session (16:00–18:00). Unit that day: T5. Business models (II), platforms and ecosystems · Case 5."],
  ["2026-10-09","—","No Operations Management — regional public holiday","Día de la Comunitat Valenciana. Already reflected: you had no class scheduled that Friday."],
  ["2026-10-15","17:30–20:00","Operations Management replaces Methods and Tools","Exchanged for the cancelled Fri 30 Oct OM session; <b>no Methods session that week</b>. Prepare both cases in advance: Dell (Business Models) and Quality Crusader (Quality Management). Long day — Knowledge Transfer 09:00–14:00 and Senior Management 15:00–17:10 come first."],
+ ["2026-10-22","time TBC","Technological Entrepreneurship — visit to VDS","Make-up for the cancelled 5 Oct class. Time and meeting point not stated — confirm with Prof. Ribes. ⚠ Thursday already has Senior Management 15:00–17:10 and Methods &amp; Tools 17:30–20:00."],
  ["2026-10-30","15:00–17:30","✕ Operations Management — NO SESSION","Exchanged for Thu 15 Oct. Knowledge Transfer still runs 09:00–14:00 that morning."],
  ["2026-11-06","15:00–17:30","✕ Operations Management — NO SESSION","Outdoor activity in the morning instead; no afternoon class. Morning time not stated in the email."],
  ["2026-11-26","17:30–20:00","Operations Management replaces Methods and Tools","Timetable change for the week of 23–27 November."],
