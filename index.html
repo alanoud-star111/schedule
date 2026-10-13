@@ -611,6 +611,22 @@ const EXAM_NOTE="Rooms not yet published. ⚠ Dec 15 shows two exams in the same
 const NTS_NOTE="Mondays 17:50–19:50 · Wednesdays 17:50–20:00, Seminario 4.3. Prof. Blanca de Miguel Molina, except <b>w11 (16 &amp; 18 Nov) taught by Barbara</b>. <span class=\"t-red\">Red = EXPOSITIONS</span> (presentation days). No Monday session in w6 — Oct 12 is a national holiday. Weekly task detail is added as the professor publishes it.";
 const RM_NOTE="<b>Grading:</b> assignments 1–5 &amp; 7–10 = 50% · Protocol (A6) = 20% · Final work (A11) = 30%. Only the final work can be re-evaluated if failed (December or January).<br><b>GenAI policy:</b> allowed only to improve readability/language, with a declaration statement at the end of the work — you're accountable for the content.<br>Assignments are listed under the session where they're <i>set</i>; the plan doesn't state due dates, so confirm those in class. The professor notes \"some changes could be made\".";
 
+const SMIT_PLAN=[
+ ["Ch1","Information Systems in Global Business Today","Course intro · business case"],
+ ["Ch2","Global e-Business and Collaboration","Business case"],
+ ["Ch3","Information Systems, Organizations, and Strategy","Business case"],
+ ["Ch5","IT Infrastructure","Business case"],
+ ["EXAM","1st exam — Thu 22 Oct","2026-10-22"],
+ ["Ch8","Securing Information Systems","Business case"],
+ ["Ch9","Achieving Operational Excellence and Customer Intimacy: Enterprise Applications","Business case"],
+ ["Ethics I","Ethical and Social Issues in Information Systems (I)","Fernando González + María de Miguel"],
+ ["Ethics II","Ethical and Social Issues in Information Systems (II)","María de Miguel"],
+ ["Ch10","E-Commerce: Digital Markets, Digital Goods","María de Miguel + Fernando González"],
+ ["Ch11","Managing Knowledge","Business case"],
+ ["Ch12","Enhancing Decision Making","Business case"],
+ ["EXAM","2nd exam — Thu 26 Nov","2026-11-26"]
+];
+const SMIT_NOTE="Order from the course mind map (Management_TIC2.mm). Its session dates are from a previous year, so topics aren't tied to 2026 dates here. In that plan the 1st exam came right after Ch5, but this year it's later (22 Oct), so more chapters may come before it. Exam times not confirmed.<br><b>Grading:</b> practical activities 60% (María de Miguel's part 20% · team portfolio / record of activities 40%) · business cases 40% (1st &amp; 2nd case). The mind map doesn't list the exams as a separate grade — the two exams may <i>be</i> the business cases; worth confirming.<br><b>Resources:</b> <a href=\"https://poliformat.upv.es/x/soz2jK\" target=\"_blank\">PoliformaT course page</a> (lecture notes, activities, business cases) · team dashboard in Google Drive · bring your own laptop (BYOD).<br><b>Textbook:</b> Laudon &amp; Laudon, <i>Management Information Systems</i>, Global Edition, 17th ed. (14th ed. is online via the UPV library).<br><b>Contact:</b> Prof. Fernando González prefers PoliformaT (email or forum) · <a href=\"https://fglguevara.github.io\" target=\"_blank\">fglguevara.github.io</a>. 30 students, 5 teams; past teams built their portfolio as a website (Wix / WordPress).<br>Mind map says Seminar 4.2; your UPV calendar says 4.3 — go by the calendar.";
 // ---------- helpers ----------
 const $=id=>document.getElementById(id);
 const REPO='alanoud-star111/schedule', OWNER='alanoud-star111';
@@ -917,6 +933,15 @@ function planHTML(ci){
       h+='<div class="prow'+(dt<todayISO?' past':'')+(dt===todayISO?' today':'')+'"><span class="pd">'+(i+1)+'. '+fmtS(dt,{day:'numeric',month:'short'})+'</span><span><b>'+r[1]+'</b>'+(r[2]?'<br><span class="kn">'+r[2]+'</span>':'')+'</span></div>';
     });
     return '<details class="plan"><summary>Session plan &amp; assignments</summary>'+h+'<p class="note">'+RM_NOTE+'</p></details>';
+  }
+  if(n==='SENIOR MANAGEMENT AND INFORMATION TECHNOLOGIES'){
+    let h='<div class="plan-sec">Topic order</div>';
+    SMIT_PLAN.forEach(r=>{
+      h+=r[0]==='EXAM'
+        ?'<div class="prow'+(r[2]<todayISO?' past':'')+(r[2]===todayISO?' today':'')+'"><span class="pd t-red"><b>EXAM</b></span><span class="t-red"><b>'+r[1]+'</b></span></div>'
+        :'<div class="prow"><span class="pd">'+r[0]+'</span><span><b>'+r[1]+'</b><br><span class="kn">'+r[2]+'</span></span></div>';
+    });
+    return '<details class="plan"><summary>Course outline</summary>'+h+'<p class="note">'+SMIT_NOTE+'</p></details>';
   }
   return '';
 }
