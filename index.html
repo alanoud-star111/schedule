@@ -380,15 +380,10 @@ const EVENTS=[["2026-09-08","15:00","17:00",0],["2026-09-08","17:20","21:30",1],
 // One distinct color per course (same order as COURSES); red is kept for exams/deadlines
 const COLORS=["#2563EB","#DB2777","#059669","#EA580C","#7C3AED","#0891B2","#CA8A04","#64748B","#0D9488","#C026D3","#4F46E5","#65A30D","#B45309"];
 const EXAMS=[
- ["2026-10-27","15:00","17:00","Senior Management and IT — 1st Business Case: team quiz, 60 min, 20% (moved from 22 Oct; in class slot, start time not confirmed)"],
+ ["2026-10-27","15:05","16:45","Senior Management and IT — 1st Business Case: team quiz on Alibaba, 100 min, 20% · Seminar 4.3"],
  ["2026-11-26","15:00","17:10","Senior Management and IT — 2nd Business Case (in class slot; time not confirmed)"],
  ["2026-12-10","16:00","18:00","Methods and Tools for Business Decision-Making"],
  ["2026-12-11","16:00","18:00","Operations Management"],
- ["2026-12-14","16:00","18:00","Technological Entrepreneurship"],
- ["2026-12-15","16:00","18:00","Participative Management and Teamwork"],
- ["2026-12-15","16:00","18:00","New Trends in Service Strategies"],
- ["2026-12-16","16:00","18:00","Senior Management and Information Technologies"],
- ["2026-12-16","16:00","18:00","Research Methodologies"],
  ["2027-05-24","16:00","18:00","Innovation Management"],
  ["2027-05-25","16:00","18:00","New Product Development"],
  ["2027-05-26","09:00","11:00","Product Project"],
@@ -441,7 +436,8 @@ function ntsNote(e){ return (COURSES[e.ci] && COURSES[e.ci][0]==='NEW TRENDS IN 
 // Per-session prep notes: date -> [{course, text}]
 const PREP={
  "2026-10-02":[{course:"OPERATIONS MANAGEMENT",text:"Read the slides before class"}],
- "2026-10-15":[{course:"OPERATIONS MANAGEMENT",text:"Prepare both cases in advance: <b>Dell</b> (Business Models) · <b>Quality Crusader</b> (Quality Management)"}]
+ "2026-10-15":[{course:"OPERATIONS MANAGEMENT",text:"Prepare both cases in advance: <b>Dell</b> (Business Models) · <b>Quality Crusader</b> (Quality Management)"}],
+ "2026-10-27":[{course:"SENIOR MANAGEMENT AND INFORMATION TECHNOLOGIES",text:"<b>Business case quiz on Alibaba, 15:05 sharp, 100 min.</b> Laptop fully charged · review the Laudon &amp; Laudon framework · agree in your team who writes the final document and in which shared tool · keep an AI log · one PDF/Word on PoliformaT with all names on page 1"}]
 };
 function prepFor(e){
   const list=PREP[e.date];
@@ -451,6 +447,20 @@ function prepFor(e){
 }
 // Graded deliverables with their own deadlines
 const ASSIGNMENTS=[
+ {due:"2026-10-24",course:"Technological Entrepreneurship",mode:"Individual fieldwork at VDS",
+  title:"VDS 2026 · 2 startup surveys + 2 company profiles · due Sat 24 Oct",
+  brief:"Research study <b>“Female Leadership in Technology Entrepreneurship”</b>. At the summit, get representatives from <b>two different startups</b> to complete the survey by scanning the QR code.",
+  format:"For each of the two startups, make a short profile with: <b>company name · website · year founded · what it does (product/service) · target market / customers · sector · number of employees</b>.",
+  submit:"PoliformaT → “Entrega VDS 2026. TAREA INDIVIDUAL.” Deadline time not stated.",
+  parts:[],
+  note:"The QR code for the survey is in <b>“VLC SUMMIT 26.pdf”</b> on your Desktop; have it on your phone. Collect the profile details while you're talking to them, since website and employee count are easy to forget."},
+ {due:"2026-10-24",course:"Managerial University-Companies Knowledge Transfer",mode:"Team field report (3–4) + individual reflection",
+  title:"VDS 2026 field report “How Do Companies Collaborate with Universities to Innovate?” · due Sat 24 Oct",
+  brief:"One team report full of real evidence (your own photos, brochures, QR codes, business cards, interview notes).",
+  format:"<b>1. Expo area:</b> at least <b>3 organisations</b> (startups, tech companies, corporations) that work with universities. Ask: Do you collaborate with universities, and why? What do students contribute? What does the company get? What barriers are there? Do you offer internships, projects or theses?<br><b>2. Three talks:</b> one on the <b>Main Stage</b>, one on the <b>Innovation Stage</b>, one of your choice. For each, the speakers' main ideas and how they relate to your interests, studies or career.<br><b>3. Ecosystem map:</b> a diagram of the links between universities, startups, large corporations, investors, public institutions and accelerators/incubators, based on what you actually see at VDS.<br><b>4. Individual reflection:</b> “What are the three most important things you learned during today's visit?”",
+  submit:"PoliformaT → “Entrega Valencia Digital Summit 2026. 22nd October 2026”. Deadline time not stated.",
+  parts:[],
+  note:"Your reflection answers go into your <b>individual final pitch video</b> later (date not stated). Split the expo interviews and talks across the team on the day."},
  {due:"2026-11-15",course:"Participative Management &amp; Teamwork",mode:"Individual fieldwork",
   title:"5 HIWP interviews · upload to LimeSurvey by Sun 15 Nov",
   brief:"Interview <b>5 people</b> who work now (or recently) as employees in an organisation with <b>more than 5 people</b>. Friends or family are fine; you can also interview yourself. About <b>60–90 min each</b> + ~10 min to enter the answers.",
@@ -563,9 +573,9 @@ const APPTS=[
   bring:["Passport","The resguardo / receipt they gave you at the appointment on 21 Sep"],
   note:"Appointment completed 21 Sep 2026; cards are typically ready about 30 days later. Confirm the collection procedure — some stations require a separate cita previa to pick up, others accept walk-ins during set hours."},
  {date:"2026-10-22",start:"—",title:"Technological Entrepreneurship — visit to VDS",
-  where:"VDS — location not stated",
+  where:"Valencia Digital Summit — venue not stated",
   bring:[],
-  note:"Make-up for the cancelled Mon 5 Oct class (announced by Prof. Gabriela Ribes). <b>Time and meeting point not stated</b> — confirm with her. ⚠ Thursday already has Senior Management 15:00–17:10 and Methods &amp; Tools 17:30–20:00; check whether the visit clashes."}
+  note:"Valencia Digital Summit 2026, a field visit for <b>both</b> Technological Entrepreneurship (make-up for the cancelled Mon 5 Oct class) and Knowledge Transfer. The Knowledge Transfer brief mentions observations “during the morning”. Two deliverables are due Sat 24 Oct; see Deadlines. <b>Time and meeting point not stated</b> — confirm with her. ⚠ Thursday already has Senior Management 15:00–17:10 and Methods &amp; Tools 17:30–20:00; check whether the visit clashes."}
 ];
 const apptEvs=APPTS.map(a=>({date:a.date,start:a.start,end:a.start,appt:a}));
 // One-off swaps announced by email. Key: date|start. ci = replacement course index.
@@ -606,7 +616,7 @@ const PAT_NOTE={
 };
 const KD=[
  ["Sep 7, 2026","Orientation (Jornadas de Acogida)","first real class Sep 8",0,"2026-09-07"],
- ["Dec 10–16, 2026","Your semester 1 exams","exact slots under Deadlines → Exams",1,"2026-12-16"],
+ ["Dec 10–11, 2026","Your semester 1 finals","only Methods &amp; Tools (Dec 10) and Operations Mgmt (Dec 11)",1,"2026-12-11"],
  ["Jan 18–21, 2027","Compensatory exams A","make-ups for semester 1",1,"2027-01-21"],
  ["Feb 16, 2027","Semester 2 starts","",0,"2027-02-16"],
  ["Mar 22–May 7, 2027","Extraordinary evaluation (2nd)","eligible students only",0,"2027-05-07"],
@@ -614,7 +624,7 @@ const KD=[
  ["Jun 14–17, 2027","Compensatory exams B","make-ups for semester 2",1,"2027-06-17"],
  ["Jul 22–Sep 3, 2027","Extraordinary evaluation (3rd)","",0,"2027-09-03"]
 ];
-const EXAM_NOTE="Rooms not yet published. ⚠ Dec 15 shows two exams in the same slot (Participative Mgmt + New Trends), and Dec 16 too (Senior Mgmt &amp; IT + Research Methodologies) — confirm with the faculty how that works. No exam listed for Knowledge Transfer (likely continuous assessment).";
+const EXAM_NOTE="Rooms not yet published. Semester 1: only Methods &amp; Tools and Operations Management have a final exam; the other semester 1 courses have no final (confirmed in class, 21 Oct). Semester 2 finals not yet confirmed.";
 const NTS_NOTE="Mondays 17:50–19:50 · Wednesdays 17:50–20:00, Seminario 4.3. Prof. Blanca de Miguel Molina, except <b>w11 (16 &amp; 18 Nov) taught by Barbara</b>. <span class=\"t-red\">Red = EXPOSITIONS</span> (presentation days). No Monday session in w6 — Oct 12 is a national holiday. Weekly task detail is added as the professor publishes it.";
 const RM_NOTE="<b>Grading:</b> assignments 1–5 &amp; 7–10 = 50% · Protocol (A6) = 20% · Final work (A11) = 30%. Only the final work can be re-evaluated if failed (December or January).<br><b>GenAI policy:</b> allowed only to improve readability/language, with a declaration statement at the end of the work — you're accountable for the content.<br>Assignments are listed under the session where they're <i>set</i>; the plan doesn't state due dates, so confirm those in class. The professor notes \"some changes could be made\".";
 
@@ -623,7 +633,7 @@ const SMIT_PLAN=[
  ["Ch2","Global e-Business and Collaboration","Business case"],
  ["Ch3","Information Systems, Organizations, and Strategy","Business case"],
  ["Ch5","IT Infrastructure","Business case"],
- ["EXAM","1st Business Case — Tue 27 Oct (team quiz · 60 min · 20%)","2026-10-27"],
+ ["EXAM","1st Business Case — Tue 27 Oct, 15:05 (team quiz on Alibaba · 100 min · 20%)","2026-10-27"],
  ["Ch8","Securing Information Systems","Business case"],
  ["Ch9","Achieving Operational Excellence and Customer Intimacy: Enterprise Applications","Business case"],
  ["Ethics I","Ethical and Social Issues in Information Systems (I)","Fernando González + María de Miguel"],
@@ -633,7 +643,7 @@ const SMIT_PLAN=[
  ["Ch12","Enhancing Decision Making","Business case"],
  ["EXAM","2nd Business Case — Thu 26 Nov","2026-11-26"]
 ];
-const SMIT_NOTE="Order from the course mind map (Management_TIC2.mm). Its session dates are from a previous year, so topics aren't tied to 2026 dates here. In that plan the 1st assessment came right after Ch5, but this year it's later (27 Oct), so more chapters may come before it. Times not confirmed.<br><b>Grading:</b> practical activities 60% (María de Miguel's part 20% · team portfolio / record of activities 40%) · business cases 40% (1st &amp; 2nd case). Confirmed on the board (15 Oct): two business cases. Update (slides): by class vote the 1st business case moved to Tue 27 Oct — taken in teams, one answer sheet per team, 60 min, 20% of the final grade. Expect a business case with related questions; attending class should be enough, no extra study. Team work counts in the team grade; individual work also counts in the portfolio. ⚠ The slide says both “on computer” and “no computers” — confirm which.<br><b>Resources:</b> <a href=\"https://poliformat.upv.es/x/soz2jK\" target=\"_blank\">PoliformaT course page</a> (lecture notes, activities, business cases) · team dashboard in Google Drive · bring your own laptop (BYOD).<br><b>Textbook:</b> Laudon &amp; Laudon, <i>Management Information Systems</i>, Global Edition, 17th ed. (14th ed. is online via the UPV library).<br><b>Contact:</b> Prof. Fernando González prefers PoliformaT (email or forum) · <a href=\"https://fglguevara.github.io\" target=\"_blank\">fglguevara.github.io</a>. 30 students, 5 teams; past teams built their portfolio as a website (Wix / WordPress).<br>Mind map says Seminar 4.2; your UPV calendar says 4.3 — go by the calendar.";
+const SMIT_NOTE="Order from the course mind map (Management_TIC2.mm). Its session dates are from a previous year, so topics aren't tied to 2026 dates here. In that plan the 1st assessment came right after Ch5, but this year it's later (27 Oct), so more chapters may come before it. Times not confirmed.<br><b>Grading:</b> practical activities 60% (María de Miguel's part 20% · team portfolio / record of activities 40%) · business cases 40% (1st &amp; 2nd case). Confirmed on the board (15 Oct): two business cases. <b>1st business case (confirmed by Prof. González, 26 Oct):</b> Tue 27 Oct, starts <b>15:05</b> sharp in Seminar 4.3, <b>100 min</b>, in teams, 20% of the final grade (moved from 22 Oct by class vote). Case: <b>Alibaba</b> and its strategy for AI models, cloud computing and AI applications, analysed as an information system, then applied to a decision in a second company revealed at the start. Use the <b>Laudon &amp; Laudon framework</b> (business challenge; management, organization and technology; IS solution; business value; new challenges). Justify decisions with data from the case; primary sources (company results, official filings) beat news articles. Laptops with full battery; internet, gen AI and course materials allowed. Keep an <b>AI log</b> (no log = lost points). Mural diagrams must be pasted into the final document. Submit <b>one PDF or Word per team</b> on PoliformaT, all names on page 1.<br><b>Resources:</b> <a href=\"https://poliformat.upv.es/x/soz2jK\" target=\"_blank\">PoliformaT course page</a> (lecture notes, activities, business cases) · team dashboard in Google Drive · bring your own laptop (BYOD).<br><b>Textbook:</b> Laudon &amp; Laudon, <i>Management Information Systems</i>, Global Edition, 17th ed. (14th ed. is online via the UPV library).<br><b>Contact:</b> Prof. Fernando González prefers PoliformaT (email or forum) · <a href=\"https://fglguevara.github.io\" target=\"_blank\">fglguevara.github.io</a>. 30 students, 5 teams; past teams built their portfolio as a website (Wix / WordPress).<br>Mind map says Seminar 4.2; your UPV calendar says 4.3 — go by the calendar.";
 // ---------- helpers ----------
 const $=id=>document.getElementById(id);
 const REPO='alanoud-star111/schedule', OWNER='alanoud-star111';
