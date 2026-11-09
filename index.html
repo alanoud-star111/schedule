@@ -355,6 +355,22 @@ select{flex:1;min-width:150px;padding:9px 10px;border-radius:10px;border:1px sol
       <div id="keydates"></div>
     </div>
     <div class="card">
+      <div class="card-h">TFM — how the process works</div>
+      <p class="note" style="margin-top:0"><b>Two routes to get a TFM.</b> <b>Oferta general</b> — the secretariat emails a window (usually October); unassigned topics are published around November and you preselect up to 10 in priority order in Ebron; ties are broken by enrolment priority. <b>Trabajo concertado</b> — you agree a topic with a tutor yourself, it's registered in Ebron, and the CAT approves it. A November window for <b>concertados only</b> stays open until <b>12 June</b>.<br>
+      <b>Before proposing:</b> you must have contacted the professor and agreed the work. Then: Intranet → Secretaría virtual → Trabajo Fin de Máster (Ebron) → TFG/TFM → Propuesta de trabajo → <i>Alta de propuesta</i>. Your tutor validates it, then the CAT accepts or rejects. <b>Remember to save, or it isn't sent.</b><br>
+      <b>The proposal must include</b> (Art. 9): degree, title, abstract, tutor's name, tutor's department, estimated hours you'll spend, and — for a TFM — whether it's <b>professional or research</b> oriented. The <b>title must be given in Spanish, Valencian and English</b>.<br>
+      <b>Abstract rules:</b> <b>100–250 words</b>, must cover <b>object, objective and methodology</b>; structure it as contextualisation → objective(s) → methodology → expected results. Present tense, third person, impersonal and formal. <b>Proposals with spelling or grammar errors are rejected.</b> Avoid naming the company in the title unless you have a signed agreement. This approved abstract is what appears publicly on RIUNET after your defence — the title can be changed later via Ebron, but only inside the windows in the defence calendar.<br>
+      <b>Assignment lasts two academic years</b> (your enrolment is one year at a time). Changing tutor is allowed if agreed — a written request signed by both goes to Secretaría.<br>
+      <b>Privacy:</b> don't tick "confidential" unless you have a confidentiality agreement or patent to justify it. If you simply don't want the PDF public, choose <b>"cerrado"</b> at deposit time — then only title, abstract, keywords, your name and tutor appear.</p>
+    </div>
+    <div class="card">
+      <div class="card-h">TFM — rules on using AI (IAG)</div>
+      <p class="note" style="margin-top:0"><b>Allowed:</b> background reading on a topic · improving the wording, grammar or style of text <i>you</i> wrote · translating or summarising sources (then reviewing and adapting) · generating outlines, concept maps or structural ideas · technical/format guidance you then apply yourself.<br>
+      <b>Not allowed:</b> AI drafting substantial sections (introduction, theoretical framework, methodology, results, conclusions) · AI doing the data analysis, interpreting results or writing conclusions without your own critical input · fabricating data, charts, results or citations · anything that replaces your intellectual work · <b>using AI output without declaring and citing it</b>.<br>
+      <b>Consequences of misuse:</b> penalties or a fail for lack of authorship, a disciplinary procedure for academic integrity, or a forced rewrite — which can cost you the convocatoria and delay your defence.<br>
+      <b>You must:</b> cite AI like any source (APA 7: <i>OpenAI. (2025). ChatGPT [Modelo de lenguaje]. https://chat.openai.com/</i>), and attach the signed official template <b>"Declaración de uso de la Inteligencia Artificial Generativa"</b> as an <b>annex to your final memoria</b>, stating the tools used, the phases they were used in, the purpose and scope, and your own reflective contribution.</p>
+    </div>
+    <div class="card">
       <div class="card-h">TFM (Master's thesis) — calendar 2026/27</div>
       <div id="tfmplan"></div>
       <p class="note"><b>How it works:</b> your proposal must be uploaded and approved at a CAT meeting <i>before</i> you can deposit the thesis for that convocatoria. Anything submitted after a deadline rolls to the next CAT meeting. <b>The last possible date to present an agreed TFM proposal for the whole course is 11 June 2027.</b><br>For the September convocatoria the TFM must be finished by <b>28 July 2027</b> — the deposit window, not the defence date, is the real deadline.<br>Approved by CAT MUGEPS, 26 Oct 2026. Full details: <a href="https://www.upv.es/entidades/ade/trabajo-final-de-grado-y-master/" target="_blank" rel="noopener noreferrer">FADE TFM page</a>.</p>
@@ -562,6 +578,11 @@ const ASSIGNMENTS=[
 ];
 // Admin action items with their own deadlines
 const ACTIONS=[
+ {due:"2026-11-20",course:"TFM (Master's thesis)",
+  title:"Check the TFM is actually in your enrolment",
+  detail:"Article 7: you can only enrol the TFM if you're enrolled in <b>all remaining ECTS</b>, and it should be done at your <b>automatrícula</b> date. Enrolling it late needs ERT authorisation and <b>carries no guarantee of fee exemptions or discounts</b>.",
+  include:"<b>Check in Intranet → Secretaría virtual → Enrolment details</b> whether the TFM appears in your 2026/27 matrícula. If it doesn't, ask the FADE secretariat now rather than in February.",
+  note:"Enrolling the TFM in a given year lets you present in <b>any convocatoria of that year</b>. If you don't pass it, you must re-enrol in a later year."},
  {due:"2027-02-05",course:"TFM (Master's thesis)",
   title:"Line up a TFM supervisor and settle a topic",
   detail:"Target: have a supervisor agreed and a topic defined in time for the <b>2ª convocatoria proposal deadline, Fri 12 Feb 2027</b> (CAT approval 18 Feb). That gives you late February to late June to actually write it.",
