@@ -355,6 +355,11 @@ select{flex:1;min-width:150px;padding:9px 10px;border-radius:10px;border:1px sol
       <div id="keydates"></div>
     </div>
     <div class="card">
+      <div class="card-h">TFM (Master's thesis) — calendar 2026/27</div>
+      <div id="tfmplan"></div>
+      <p class="note"><b>How it works:</b> your proposal must be uploaded and approved at a CAT meeting <i>before</i> you can deposit the thesis for that convocatoria. Anything submitted after a deadline rolls to the next CAT meeting. <b>The last possible date to present an agreed TFM proposal for the whole course is 11 June 2027.</b><br>For the September convocatoria the TFM must be finished by <b>28 July 2027</b> — the deposit window, not the defence date, is the real deadline.<br>Approved by CAT MUGEPS, 26 Oct 2026. Full details: <a href="https://www.upv.es/entidades/ade/trabajo-final-de-grado-y-master/" target="_blank" rel="noopener noreferrer">FADE TFM page</a>.</p>
+    </div>
+    <div class="card">
       <div class="card-h">All sessions</div>
       <div class="filters">
         <select id="f-course"><option value="">All courses</option></select>
@@ -365,7 +370,7 @@ select{flex:1;min-width:150px;padding:9px 10px;border-radius:10px;border:1px sol
     <div class="card warn">
       <div class="card-h">Still double-check on UPV Intranet</div>
       <ul>
-        <li>Nothing scheduled after Jun 17, 2027 — almost certainly TFM (thesis) period; confirm submission/defense dates.</li>
+        <li>TFM calendar now confirmed (see the TFM card above). Still to decide: <b>which convocatoria you're aiming for</b>, and who supervises.</li>
         <li>Logistics has no professor listed yet.</li>
         <li>Single-day items (orientation ~Sep 7, patron saint day ~May 7, grade deadlines) — check Calendario-Academico-MUGEPS.pdf for exact days.</li>
       </ul>
@@ -445,6 +450,13 @@ function prepFor(e){
   const hit=list.find(p=>p.course===COURSES[e.ci][0]);
   return hit?hit.text:null;
 }
+// TFM (Master's thesis) calendar 2026/27 — approved by CAT MUGEPS 26/10/2026
+const TFM=[
+ {c:"1ª convocatoria",prop:"Mon 16 Nov 2026",cat:"Thu 19 Nov 2026",dep:"23–25 Nov 2026",def:"14–15 Dec 2026"},
+ {c:"2ª convocatoria",prop:"Fri 12 Feb 2027",cat:"Thu 18 Feb 2027",dep:"24–26 Feb 2027",def:"10–12 Mar 2027"},
+ {c:"3ª convocatoria",prop:"Fri 11 Jun 2027",cat:"Thu 17 Jun 2027",dep:"25–29 Jun 2027",def:"12–14 Jul 2027"},
+ {c:"4ª convocatoria",prop:"Mon 12 Jul 2027 <span class=\"kn\">(modifications only — to TFMs already approved)</span>",cat:"Wed 21 Jul 2027",dep:"26–28 Jul 2027",def:"20–22 Sep 2027"}
+];
 // Graded deliverables with their own deadlines
 const ASSIGNMENTS=[
  {due:"2026-10-24",course:"Technological Entrepreneurship",mode:"Individual fieldwork at VDS",
@@ -994,6 +1006,8 @@ function renderMore(){
   const upc=CHANGE_LIST.filter(c=>c[0]>=todayISO), pst=CHANGE_LIST.filter(c=>c[0]<todayISO);
   $('changelist').innerHTML=(upc.length?upc.map(chg).join(''):'<p class="none">No upcoming changes.</p>')
     +(pst.length?'<details class="fold"><summary>Past changes ('+pst.length+')</summary>'+pst.map(chg).join('')+'</details>':'');
+  $('tfmplan').innerHTML=TFM.map(r=>'<div class="keyrow"><span class="kd">'+r.c+'</span><span>'
+    +'<b>Defence '+r.def+'</b><br><span class="kn">Proposal by '+r.prop+' · CAT approval '+r.cat+' · deposit (EBRON) '+r.dep+'</span></span></div>').join('');
   $('keydates').innerHTML=KD.map(([d,t,n,big,end])=>'<div class="keyrow'+(big?' big':'')+(end<todayISO?' past':'')+'"><span class="kd">'+d+'</span><span>'+t+(n?' <span class="kn">— '+n+'</span>':'')+'</span></div>').join('');
   const fc=$('f-course');
   COURSES.map((c,i)=>({i,n:tc(c[0])})).sort((a,b)=>a.n.localeCompare(b.n)).forEach(({i,n})=>{
